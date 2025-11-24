@@ -1,0 +1,203 @@
+@define-color nord0 #2e3440; /* bg */
+@define-color nord1 #3b4252; /* module bg */
+@define-color nord4 #d8dee9; /* text */
+@define-color nord8 #88c0d0; /* blue - cpu, network */
+@define-color nord9 #81a1c1; /* battery */
+@define-color nord10 #5e81ac; /* clock, date */
+@define-color nord11 #bf616a; /* temp */
+@define-color nord13 #ebcb8b; /* ram */
+
+* {
+  font-family: JetBrainsMono, FiraCode, monospace;
+  font-size: 14px;
+  color: @nord4;
+}
+
+window#waybar {
+  background: @nord0;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+#custom-cpu,
+#custom-ram,
+#custom-temp,
+#custom-clock,
+#custom-date,
+#custom-battery,
+#custom-ram_percent,
+#custom-network2,
+#custom-battery,
+#custom-battery_percent,
+#custom-network {
+  background: @nord1;
+  font-weight: bold;
+  box-shadow: none;
+  border: none;
+}
+#custom-cpu {
+  color: #ffffff;
+  border-radius: 12px 0px 0px 12px;
+  background: @nord1;
+  padding: 0px 20px 0px 16px;
+  margin: 0 4px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-ram {
+  color: #ffffff;
+  border-radius: 0px 12px 12px 0px;
+  background: @nord1;
+  padding: 0px 20px 0px 10px;
+  margin: 0px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-separator {
+  font-size: 18px;
+  color: #434c5e;
+  padding: 0px 0px 0px 10px; /* Horizontal space around the separator */
+  margin: 0 0px; /* Optional: tweak for spacing */
+  font-weight: bold; /* Make it bold if desired */
+}
+#custom-github {
+  background: transparent;
+  color: #ffffff;
+  padding: 0px 5px 0px 10px;
+  margin: 0px 0px 0px 0px;
+  font-weight: bold;
+  box-shadow: none;
+  border: none;
+}
+#custom-temp {
+  background: transparent;
+  color: #ffffff;
+  padding: 2px 0px;
+  margin: 0 20px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-clock {
+  color: #ffffff;
+  border-radius: 12px 0px 0px 12px;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0 2px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-date {
+  color: #ffffff;
+  border-radius: 0px 12px 12px 0px;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0 2px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-battery {
+  color: #ffffff;
+  border-radius: 0px;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0 2px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-network {
+  color: #ffffff;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0 2px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-ram_percent {
+  color: #ffffff;
+  border-radius: 0px 12px 12px 0px;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0 4px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-network2 {
+  color: #ffffff;
+  border-radius: 12px 0px 0px 12px;
+  background: @nord1;
+  padding: 2px 16px;
+  margin: 0px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-battery_percent {
+  color: #ffffff;
+  border-radius: 0px 0px 0px 0px;
+  background: @nord1;
+  padding: 2px 6px;
+  margin: 0 1px;
+  font-weight: bold;
+  min-width: 48px;
+  box-shadow: none;
+  border: none;
+}
+#custom-spotify {
+  background: transparent;
+  padding: 0px;
+  font-size: 18px;
+}
+#custom-bluetooth {
+  background: transparent;
+  padding: 0px 10px;
+  font-size: 18px;
+}
+#custom-whatsapp {
+  background: transparent;
+  color: #25d366;
+  padding: 0px 5px 0px 5px;
+  font-size: 18px;
+}
+#custom-gmail {
+  background: transparent;
+  padding: 0px;
+  font-size: 18px;
+}
+#custom-chatgpt {
+  background: transparent;
+  padding: 0px 5px 0px 5px;
+  font-size: 18px;
+}
+tooltip {
+  background: @nord2;
+  color: @nord4;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* For built-in modules (if you use clock/battery/network built-ins) */
+#clock,
+#battery,
+#network {
+  background: @nord1;
+  padding: 2px 14px;
+  margin: 0 2px;
+  font-weight: bold;
+}

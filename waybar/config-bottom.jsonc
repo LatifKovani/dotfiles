@@ -1,0 +1,84 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "mode": "dock",
+  "reload_style_on_change": true,
+  "gtk-layer-shell": true,
+  "height": 10,
+  "output": "eDP-1",
+  "modules-left": [
+    "custom/security",
+    "network",
+    "custom/netspeed",
+    "custom/separator2",
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "tray",
+    "custom/battery",
+    "custom/volumebar",
+    "custom/brightnessbar",
+  ],
+  "tray": {
+    "spacing": 8,
+    "icon-size": 22,
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "*": 5,
+      "HDMI-A-1": 3,
+    },
+  },
+  "custom/netspeed": {
+    "exec": "~/.config/waybar/scripts/netspeed.sh",
+    "interval": 2,
+    "format": "{}",
+  },
+  "custom/disk": {
+    "exec": "~/.config/waybar/scripts/disk.sh",
+    "interval": 10,
+    "format": "{}",
+  },
+  "custom/separator2": {
+    "format": "󰇙 ",
+    "tooltip": false,
+  },
+  "custom/battery": {
+    "exec": "~/.config/waybar/scripts/battery.sh",
+    "interval": 30,
+  },
+  "custom/volumebar": {
+    "exec": "~/.config/waybar/scripts/volumebar.sh",
+    "format": "{}",
+    "signal": 8,
+    "interval": "once",
+  },
+  "custom/brightnessbar": {
+    "exec": "~/.config/waybar/scripts/brightnessbar.sh",
+    "format": "{}",
+    "signal": 9,
+    "interval": "once",
+  },
+  "network": {
+    "format-wifi": "<span foreground='#ebcb8b'>󰤨 </span> {essid} {frequency}GHz",
+    "format-disconnected": "<span foreground='#ebcb8b'>󰤭 </span>",
+    "format-disabled": "<span foreground='ebcb8b>󰤭 </span>",
+    "format-icons": [
+      "󰤟 ",
+      "󰤢 ",
+      "󰤥 ",
+      "󰤨 "
+    ],
+    "tooltip-format": "{essid} ({signalStrength}%)\nIP: {ipaddr}",
+    "on-click": "nm-connection-editor",
+  },
+  "custom/security": {
+    "format": "<span foreground='#97b67c'>󰒃</span>",
+    "tooltip": "Security Center",
+  },
+}

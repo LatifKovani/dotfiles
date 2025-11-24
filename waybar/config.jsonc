@@ -1,0 +1,136 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mode": "d3ock",
+  "reload_style_on_change": true,
+  "gtk-layer-shell": true,
+  "output": "eDP-1",
+  "modules-left": [
+    "custom/cpu",
+    "custom/ram",
+    "custom/separator",
+    "custom/temp",
+  ],
+  "modules-center": [
+    "custom/clock",
+    "custom/battery_percent",
+    "custom/date"
+  ],
+  "modules-right": [
+    "custom/chatgpt",
+    "custom/spotify",
+    "custom/github",
+    "custom/whatsapp",
+    "custom/gmail",
+    "custom/separator",
+    "custom/bluetooth",
+    "custom/network2",
+    "custom/ram_percent",
+  ],
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/cpu.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/ram": {
+    "exec": "~/.config/waybar/scripts/ram.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/separator": {
+    "format": "󰇙",
+    "tooltip": false,
+  },
+  "custom/temp": {
+    "exec": "~/.config/waybar/scripts/temp.sh",
+    "interval": 5,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/clock": {
+    "exec": "~/.config/waybar/scripts/clock.sh",
+    "interval": 10,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/date": {
+    "exec": "~/.config/waybar/scripts/date.sh",
+    "interval": 30,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/network": {
+    "exec": "~/.config/waybar/scripts/network.sh",
+    "interval": 10,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/ram_percent": {
+    "exec": "/home/latif/.config/waybar/scripts/ram_percent.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/network2": {
+    "exec": "/home/latif/.config/waybar/scripts/network2.sh",
+    "interval": 10,
+    "format": "{}",
+    "return-type": "json",
+  },
+  "custom/battery_percent": {
+    "exec": "~/.config/waybar/scripts/battery_percent.sh",
+    "interval": 30,
+    "return-type": "json",
+    "format": "{}",
+  },
+  "custom/battery_percent": {
+    "exec": "~/.config/waybar/scripts/battery_percent_notify.sh",
+    "interval": 30,
+  },
+  "custom/chatgpt": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "󰚩 ",
+    },
+    "on-click": "xdg-open https://chat.openai.com/",
+    "tooltip": "Open ChatGPT",
+  },
+  "custom/github": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": " ",
+    },
+    "on-click": "xdg-open https://github.com",
+    "tooltip": "Open GitHub",
+  },
+  "custom/whatsapp": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": " ",
+    },
+    "on-click": "xdg-open https://web.whatsapp.com/",
+    "tooltip": "Open WhatsApp",
+  },
+  "custom/gmail": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "󰊫 ",
+    },
+    "on-click": "xdg-open https://mail.google.com/",
+    "tooltip": "Open Gmail",
+  },
+  "custom/bluetooth": {
+    "exec": "~/.config/waybar/scripts/bluetooth.sh",
+    "interval": 10,
+    "return-type": "json",
+    "on-click": "blueman-manager",
+  },
+  "custom/spotify": {
+    "exec": "~/.config/waybar/scripts/spotify.sh",
+    "interval": 3600,
+    "return-type": "json",
+    "on-click": "spotify",
+  },
+}

@@ -1,0 +1,115 @@
+* {
+  font-family:
+    "JetBrainsMono Nerd Font", "Font Awesome 6 Free", "Font Awesome 5 Free",
+    "Font Awesome 5 Brands", "FontAwesome", sans-serif;
+  border: none;
+  box-shadow: none;
+}
+
+window#waybar {
+  background: transparent;
+  color: #2d3036;
+  border: none;
+  border-radius: 0 10px 0 0px;
+  min-height: 0px;
+}
+#custom-volumebar,
+#custom-battery,
+#custom-brightnessbar {
+  background: #2d3036;
+  color: #97b67c;
+  font-size: 15px;
+  border-radius: 6px;
+  padding: 0px 10px;
+  margin-right: 10px;
+}
+#custom-netspeed {
+  background: #2d3036;
+  border-radius: 0px 12px 12px 0px;
+  color: #ebcb8b;
+  padding: 0px 8px;
+  font-size: 14px;
+}
+
+#custom-disk {
+  background: #2d3036;
+  color: #d08770;
+  border-radius: 6px; /* Rounded corners, adjust for more/less roundness */
+  padding: 0px; /* No vertical padding, horizontal padding for space */
+  margin-right: 3px;
+  font-size: 14px;
+}
+#custom-security {
+  background: #2d3036;
+  color: #97b67c;
+  border-radius: 12px 0px 0px 12px; /* Rounded corners, adjust for more/less roundness */
+  padding: 0px 10px; /* No vertical padding, horizontal padding for space */
+  margin-right: 3px;
+  font-size: 14px;
+}
+#custom-separator2 {
+  color: #434c5e;
+  border-radius: 0px 0px 0px 0px; /* Rounded corners, adjust for more/less roundness */
+  padding: 0px 10px; /* No vertical padding, horizontal padding for space */
+  margin-right: 3px;
+  font-size: 14px;
+}
+#network {
+  background: #2d3036;
+  color: #ffffff;
+  border-radius: 0px 0px 0px 0px; /* Rounded corners, adjust for more/less roundness */
+  padding: 0px 8px; /* No vertical padding, horizontal padding for space */
+  margin-right: 3px;
+  font-size: 14px;
+}
+
+#workspaces,
+#hyprland-workspaces {
+  background: #2d3036;
+  color: #d8dee9;
+  border-radius: 5px;
+  margin: 0 4px;
+  padding: 0 6px;
+  font-size: 16px;
+  min-height: 0;
+  min-width: 0;
+}
+
+#workspaces button,
+#hyprland-workspaces button {
+  background: transparent;
+  color: #7f899c;
+  border: none;
+  box-shadow: none;
+  border-radius: 4px;
+  padding: 0 7px;
+  margin: 0 1px;
+  min-height: 0;
+  min-width: 0;
+  transition: none;
+  font-weight: 400;
+  border-bottom: 2px solid transparent;
+}
+
+#workspaces button.active,
+#hyprland-workspaces button.active {
+  color: #eceff4;
+  font-weight: 600;
+  border-bottom: 2px solid #ebcb8b; /* Yellow underline */
+  background: transparent;
+}
+
+#workspaces button.urgent,
+#hyprland-workspaces button.urgent {
+  color: #bf616a;
+  font-weight: 600;
+  background: transparent;
+  border-bottom: 2px solid #bf616a;
+}
+
+#workspaces button:hover,
+#hyprland-workspaces button.focused {
+  color: #ebcb8b;
+  background: transparent;
+  border-bottom: 2px solid #ebcb8b;
+}
