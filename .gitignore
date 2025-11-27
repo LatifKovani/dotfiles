@@ -1,0 +1,32 @@
+# Ignore everything by default (root of repo)
+/*
+
+# Keep the .gitignore file itself
+!/.gitignore
+
+# Allow these config dirs/files to be tracked — adjust to what you actually want
+!/nvim/
+!/nvim/**
+!/kitty/
+!/kitty/**
+!/tmux/
+!/tmux/**
+!/hypr/
+!/hypr/**
+!/waybar/
+!/waybar/**
+!/starship/
+!/starship/**
+!/.zshrc
+!/.config/nvim/init.vim
+
+# Ignore caches, browser profiles and other large generated data
+/.cache/
+/BraveSoftware/
+/google-chrome/
+/chromium/
+
+# System/editor noise
+.DS_Store
+thumbs.db
+*~
