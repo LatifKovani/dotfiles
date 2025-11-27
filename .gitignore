@@ -5,8 +5,6 @@
 !/.gitignore
 
 # Allow these config dirs/files to be tracked — adjust to what you actually want
-!/nvim/
-!/nvim/**
 !/kitty/
 !/kitty/**
 !/tmux/
