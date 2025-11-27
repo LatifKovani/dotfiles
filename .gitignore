@@ -1,5 +1,6 @@
 # Ignore everything by default (root of repo)
 /*
+.tmux/plugins/
 
 # Keep the .gitignore file itself
 !/.gitignore
