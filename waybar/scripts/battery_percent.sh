@@ -15,29 +15,10 @@ if [ -z "$battery_percent" ]; then
   battery_percent=0
 fi
 
-# Choose icon based on charging state and battery level
+# Only show icon when charging
 if [ "$battery_state" = "charging" ] || [ "$battery_state" = "Charging" ]; then
-  icon="󱐋" # Charging icon
-elif [ "$battery_percent" -ge 90 ]; then
-  icon="󰁹" # 100%
-elif [ "$battery_percent" -ge 80 ]; then
-  icon="󰂂" # 90%
-elif [ "$battery_percent" -ge 70 ]; then
-  icon="󰂁" # 80%
-elif [ "$battery_percent" -ge 60 ]; then
-  icon="󰂀" # 70%
-elif [ "$battery_percent" -ge 50 ]; then
-  icon="󰁿" # 60%
-elif [ "$battery_percent" -ge 40 ]; then
-  icon="󰁾" # 50%
-elif [ "$battery_percent" -ge 30 ]; then
-  icon="󰁽" # 40%
-elif [ "$battery_percent" -ge 20 ]; then
-  icon="󰁼" # 30%
-elif [ "$battery_percent" -ge 10 ]; then
-  icon="󰁻" # 20%
+  icon=" 󱐋" # Charging icon with space
+  echo "{\"text\": \"$battery_percent%$icon\"}"
 else
-  icon="󰁺" # 10% or less
+  echo "{\"text\": \"$battery_percent%\"}"
 fi
-
-echo "{\"text\": \"$icon $battery_percent%\"}"
