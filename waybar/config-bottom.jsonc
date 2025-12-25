@@ -12,9 +12,7 @@
     "custom/netspeed",
     "custom/separator2",
   ],
-  "modules-center": [
-    "hyprland/workspaces"
-  ],
+  "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "tray",
     "custom/battery",
@@ -68,12 +66,7 @@
     "format-wifi": "<span foreground='#ebcb8b'>󰤨 </span> {essid} {frequency}GHz",
     "format-disconnected": "<span foreground='#ebcb8b'>󰤭 </span>",
     "format-disabled": "<span foreground='ebcb8b>󰤭 </span>",
-    "format-icons": [
-      "󰤟 ",
-      "󰤢 ",
-      "󰤥 ",
-      "󰤨 "
-    ],
+    "format-icons": ["󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
     "tooltip-format": "{essid} ({signalStrength}%)\nIP: {ipaddr}",
     "on-click": "nm-connection-editor",
   },

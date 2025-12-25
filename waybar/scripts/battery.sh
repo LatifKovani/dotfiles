@@ -12,7 +12,7 @@ fi
 
 # Choose battery icon based on charge level
 if [ "$battery_percent" -ge 95 ]; then
-  icon=" "   # Full
+  icon=" " # Full
 elif [ "$battery_percent" -ge 75 ]; then
   icon=" "
 elif [ "$battery_percent" -ge 50 ]; then
@@ -22,7 +22,7 @@ elif [ "$battery_percent" -ge 25 ]; then
 elif [ "$battery_percent" -ge 10 ]; then
   icon=" "
 else
-  icon=" "   # Empty
+  icon=" " # Empty
 fi
 
 # Bar settings
@@ -32,7 +32,7 @@ if [ $filled -gt $bar_length ]; then filled=$bar_length; fi
 empty=$((bar_length - filled))
 
 bar=""
-for ((i=0; i<filled; i++)); do bar+="─"; done
-for ((i=0; i<empty; i++)); do bar+=" "; done
+for ((i = 0; i < filled; i++)); do bar+="─"; done
+for ((i = 0; i < empty; i++)); do bar+=" "; done
 
 echo "$icon $bar"
