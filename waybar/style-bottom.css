@@ -1,4 +1,3 @@
-@define-color: bg #15120f;
 * {
   font-family:
     "JetBrainsMono Nerd Font", "Font Awesome 6 Free", "Font Awesome 5 Free",
@@ -9,7 +8,7 @@
 
 window#waybar {
   background: transparent;
-  color: bg;
+  color: #14120f;
   border: none;
   border-radius: 0 10px 0 0px;
   min-height: 0px;
@@ -17,7 +16,7 @@ window#waybar {
 #custom-volumebar,
 #custom-battery,
 #custom-brightnessbar {
-  background: bg;
+  background: #14120f;
   color: #97b67c;
   font-size: 15px;
   border-radius: 6px;
@@ -25,7 +24,7 @@ window#waybar {
   margin-right: 10px;
 }
 #custom-netspeed {
-  background: bg;
+  background: #14120f;
   border-radius: 0px 12px 12px 0px;
   color: #ebcb8b;
   padding: 0px 8px;
@@ -33,7 +32,7 @@ window#waybar {
 }
 
 #custom-disk {
-  background: bg;
+  background: #14120f;
   color: #d08770;
   border-radius: 6px; /* Rounded corners, adjust for more/less roundness */
   padding: 0px; /* No vertical padding, horizontal padding for space */
@@ -41,7 +40,7 @@ window#waybar {
   font-size: 14px;
 }
 #custom-security {
-  background: bg;
+  background: #14120f;
   color: #97b67c;
   border-radius: 12px 0px 0px 12px; /* Rounded corners, adjust for more/less roundness */
   padding: 0px 10px; /* No vertical padding, horizontal padding for space */
@@ -56,7 +55,7 @@ window#waybar {
   font-size: 14px;
 }
 #network {
-  background: bg;
+  background: #14120f;
   color: #ffffff;
   border-radius: 0px 0px 0px 0px; /* Rounded corners, adjust for more/less roundness */
   padding: 0px 8px; /* No vertical padding, horizontal padding for space */
@@ -66,7 +65,7 @@ window#waybar {
 
 #workspaces,
 #hyprland-workspaces {
-  background: bg;
+  background: #14120f;
   color: #d8dee9;
   border-radius: 5px;
   margin: 0 4px;
