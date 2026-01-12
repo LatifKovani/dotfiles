@@ -1,10 +1,10 @@
-:root {
-  --background-color: #14120f; /* A shade of blue for main actions/branding */
-  --module-color: #1b1816; /* A neutral tone for secondary elements */
-  --tooltip-color: #28a745; /* A contrasting color for calls to action */
-  --text-color: #2e3440; /* White background */
-  --text-default: #d8dee9; /* Dark gray for text for readability */
-}
+/* --background-color: #14120f;  A shade of blue for main actions/branding */
+
+/* --module-color: #1b1816;  A neutral tone for secondary elements */
+
+/* --tooltip-color: #28a745;  A contrasting color for calls to action */
+/* --text-color: #2e3440;  White background */
+/* --text-default: #d8dee9;  Dark gray for text for readability */
 
 /* =====================
    Global Defaults
@@ -12,11 +12,11 @@
 * {
   font-family: JetBrainsMono, FiraCode, monospace;
   font-size: 14px;
-  color: text-default;
+  color: #d8dee9;
 }
 
 window#waybar {
-  background: backround-color;
+  background: #14120f;
 }
 
 /* =====================
@@ -32,7 +32,7 @@ window#waybar {
 #custom-network2,
 #custom-battery,
 #custom-battery_percent {
-  background: module-color;
+  background: #1b1816;
   color: #ffffff;
   font-weight: bold;
   min-width: 48px;
@@ -146,8 +146,8 @@ window#waybar {
    Tooltip
    ===================== */
 tooltip {
-  background: tooltip-color;
-  color: text-default;
+  background: #28a745;
+  color: #d8dee9;
   border-radius: 8px;
   font-size: 13px;
 }
@@ -158,7 +158,7 @@ tooltip {
 #clock,
 #battery,
 #network {
-  background: module-color;
+  background: #1b1816;
   padding: 2px 14px;
   margin: 0 2px;
   font-weight: bold;
