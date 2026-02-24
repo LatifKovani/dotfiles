@@ -1,4 +1,4 @@
-# Ignore everything by default (root of repo)
+ # Ignore everything by default (root of repo)
 /*
 .tmux/plugins/
 
@@ -18,7 +18,12 @@
 !/starship/**
 !/.zshrc
 !/.config/nvim/init.vim
+ !/ags/
+ !/ags/**
 
+# Ignore node_modules and @girs inside ags/bar
+ ags/bar/@girs/
+ ags/bar/node_modules/
 # Ignore caches, browser profiles and other large generated data
 /.cache/
 /BraveSoftware/
