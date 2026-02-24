@@ -1,5 +1,4 @@
 import { Astal, Gtk } from "ags/gtk4"
-import { createPoll } from "ags/time"
 import Clock from "./Clock"
 import Workspaces from "./Workspaces"
 import Battery from "./Battery"
@@ -23,13 +22,9 @@ export default function Bar(monitor: number) {
       anchor={TOP | LEFT | RIGHT}
       visible
     >
-      <box
-        halign={Gtk.Align.CENTER}
-        cssClasses={["bar-center"]}
-        spacing={6}
-        heightRequest={32}
-      >
+      <box halign={Gtk.Align.CENTER} cssClasses={["bar-center"]} spacing={6}>
         <Clock />
+        <Sep />
         <Workspaces />
         <Sep />
         <Cpu />
