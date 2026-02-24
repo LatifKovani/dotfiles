@@ -252,31 +252,3 @@ $font: " SF Pro Display";
     color: $red;
   }
 }
-
-// ── Media player ───────────────────────────────────
-@keyframes media-fade-in {
-  0% {
-    opacity: 0;
-    transform: translateX(-6px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.media {
-  padding: 0 4px;
-  animation: media-fade-in 300ms ease forwards;
-}
-
-.media-icon {
-  color: $magenta;
-  font-size: 14px;
-}
-
-.media-label {
-  color: $white1;
-  font-size: 12px;
-}
