@@ -1,43 +1,3 @@
-@use "sass:color";
-
-// ── Nord Palette ───────────────────────────────────
-// Polar Night
-$black0: #198d24;
-$gray0: #242933;
-$gray1: #2e3440;
-$gray2: #3b4252;
-$gray3: #434c5e;
-$gray4: #4c566a;
-$gray5: #60728a;
-
-// Snow Storm
-$white1: #d8dee9;
-$white2: #e5e9f0;
-$white3: #eceff4;
-
-// Frost
-$blue0: #5e81ac;
-$blue1: #81a1c1;
-$blue2: #ffffff;
-$cyan: #8fbcbb;
-
-// Aurora
-$red: #bf616a;
-$orange: #d08770;
-$yellow: #ebcb8b;
-$green: #a3be8c;
-$magenta: #b48ead;
-
-$font: " SF Pro Display";
-
-// ── Base ───────────────────────────────────────────
-* {
-  font-family: $font;
-  font-size: 13px;
-  color: $white1;
-  background: transparent;
-}
-
 // ── Bar window ─────────────────────────────────────
 .bar {
   background: transparent;
@@ -67,7 +27,7 @@ $font: " SF Pro Display";
   padding: 0 4px;
 }
 
-// ── Workspace animations ────────────────────────────
+// ── Workspace animations ───────────────────────────
 @keyframes ws-slide-in {
   0% {
     transform: translateX(6px) scaleX(0.7);
@@ -96,8 +56,7 @@ $font: " SF Pro Display";
   font-size: 14px;
   transition:
     color 150ms ease,
-    background 150ms ease,
-    border-radius 150ms ease;
+    background 150ms ease;
 
   &:hover {
     color: $white1;
@@ -132,13 +91,6 @@ $font: " SF Pro Display";
   font-weight: bold;
 }
 
-// ── WiFi ───────────────────────────────────────────
-.wifi-icon {
-  color: $blue1;
-  font-size: 15px;
-  padding: 0 4px;
-}
-
 // ── Battery ────────────────────────────────────────
 .battery {
   padding: 0 4px;
@@ -154,12 +106,11 @@ $font: " SF Pro Display";
   color: $white1;
 }
 
-// ── Low battery warning ────────────────────────────
 .battery-low {
   color: $red;
 }
 
-// ── Bluetooth button ───────────────────────────────
+// ── Bluetooth ──────────────────────────────────────
 .bt-btn {
   background: transparent;
   border: none;
@@ -181,28 +132,28 @@ $font: " SF Pro Display";
   }
 }
 
-.wifi-btn {
+.bt-mgr-btn {
   background: transparent;
   border: none;
   border-radius: 999px;
-  padding: 0 16px;
-  font-size: 15px;
+  padding: 0 4px;
+  font-size: 13px;
 
   label {
-    color: $white1;
+    color: rgba($white1, 0.4);
     transition: all 150ms ease;
   }
 
   &:hover {
     background: $gray2;
-  }
 
-  &.active label {
-    color: $blue2;
+    label {
+      color: $white1;
+    }
   }
 }
 
-// ── WiFi button ────────────────────────────────────
+// ── WiFi ───────────────────────────────────────────
 .wifi-btn {
   background: transparent;
   border: none;
@@ -251,4 +202,26 @@ $font: " SF Pro Display";
   &.critical {
     color: $red;
   }
+}
+
+// ── NC Bar Button ──────────────────────────────────
+.nc-bar-btn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 0 8px;
+
+  &.active label {
+    color: $cyan;
+  }
+}
+
+.nc-bar-icon {
+  font-size: 15px;
+  color: $white1;
+}
+
+.nc-bar-count {
+  font-size: 11px;
+  color: $cyan;
 }
