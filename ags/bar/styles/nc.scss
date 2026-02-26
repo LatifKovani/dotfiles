@@ -1,6 +1,4 @@
 // ── NC Window ──────────────────────────────────────
-// Window + ALL intermediate containers = transparent
-// ONLY .nc-panel gets the background color
 .nc-window,
 window.nc-window {
   background: transparent;
@@ -25,15 +23,14 @@ window.nc-window {
   }
 }
 
-// Target libadwaita .background wrapper on NC window too
-window.nc-window>.background,
-window.nc-window>windowhandle,
-window.nc-window>windowhandle>.background {
+window.nc-window > .background,
+window.nc-window > windowhandle,
+window.nc-window > windowhandle > .background {
   background: transparent;
   background-color: transparent;
 }
 
-// ── Panel — direct child of window, no revealer ────
+// ── Panel ────────────────────────────────────────
 .nc-panel {
   background: #1b1816;
   border-top-left-radius: 20px;
@@ -81,6 +78,7 @@ window.nc-window>windowhandle>.background {
 }
 
 .nc-toggle {
+  // OFF state = Look button color (the always-inactive one)
   background: rgba(46, 52, 64, 0.6);
   border-radius: 14px;
   padding: 10px 14px;
@@ -88,18 +86,33 @@ window.nc-window>windowhandle>.background {
   min-height: 64px;
   transition: all 150ms ease;
 
+  .nc-toggle-icon {
+    color: #eceff4;
+  }
+
+  .nc-toggle-label {
+    color: rgba(216, 222, 233, 0.7);
+  }
+
   &:hover {
     background: rgba(67, 76, 94, 0.7);
   }
 
+  // ON state = keep the existing active gradient unchanged
   &.active {
-    background: linear-gradient(135deg,
-        rgba(94, 129, 172, 0.7),
-        rgba(143, 188, 187, 0.5));
+    background: linear-gradient(
+      135deg,
+      rgba(94, 129, 172, 0.7),
+      rgba(143, 188, 187, 0.5)
+    );
     border-color: rgba(143, 188, 187, 0.4);
 
     .nc-toggle-icon {
       color: #81a1c1;
+    }
+
+    .nc-toggle-label {
+      color: rgba(216, 222, 233, 0.7);
     }
   }
 }
@@ -266,8 +279,6 @@ slider {
 }
 
 // ── Toast Window ───────────────────────────────────
-// Libadwaita adds a .background node inside the window
-// that paints a solid rect — kill it explicitly
 .toast-window,
 window.toast-window {
   background: transparent;
@@ -291,23 +302,21 @@ window.toast-window {
   }
 }
 
-// Target the libadwaita .background wrapper node
-window.toast-window>.background,
-window.toast-window>windowhandle,
-window.toast-window>windowhandle>.background {
+window.toast-window > .background,
+window.toast-window > windowhandle,
+window.toast-window > windowhandle > .background {
   background: transparent;
   background-color: transparent;
 }
 
-// Target every intermediate node
-.toast-window>*,
-.toast-window>*>*,
+.toast-window > *,
+.toast-window > * > *,
 .toast-list {
   background: transparent;
   background-color: transparent;
 }
 
-// ── Toast Card — ONLY this gets the background ─────
+// ── Toast Card ─────────────────────────────────────
 .toast-card {
   background: #1b1816;
   border-radius: 14px;

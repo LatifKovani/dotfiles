@@ -1,8 +1,5 @@
 #!/bin/bash
-
-ags quit &>/dev/null
-
-sleep 0.3
-
-ags run . &
+pkill -f "ags" &>/dev/null
+sleep 0.5
+cd ~/.config/ags/bar && ags run . &
 disown
