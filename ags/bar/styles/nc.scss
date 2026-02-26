@@ -23,16 +23,16 @@ window.nc-window {
   }
 }
 
-window.nc-window > .background,
-window.nc-window > windowhandle,
-window.nc-window > windowhandle > .background {
+window.nc-window>.background,
+window.nc-window>windowhandle,
+window.nc-window>windowhandle>.background {
   background: transparent;
   background-color: transparent;
 }
 
 // ── Panel ────────────────────────────────────────
 .nc-panel {
-  background: #1b1816;
+  background: rgba(27, 24, 22, 0.55);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   border-top-right-radius: 0;
@@ -78,9 +78,9 @@ window.nc-window > windowhandle > .background {
 }
 
 .nc-toggle {
-  // OFF state = Look button color (the always-inactive one)
-  background: rgba(46, 52, 64, 0.6);
+  background: rgba(46, 52, 64, 0.5);
   border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 10px 14px;
   min-width: 72px;
   min-height: 64px;
@@ -95,17 +95,14 @@ window.nc-window > windowhandle > .background {
   }
 
   &:hover {
-    background: rgba(67, 76, 94, 0.7);
+    background: rgba(67, 76, 94, 0.6);
   }
 
-  // ON state = keep the existing active gradient unchanged
   &.active {
-    background: linear-gradient(
-      135deg,
-      rgba(94, 129, 172, 0.7),
-      rgba(143, 188, 187, 0.5)
-    );
-    border-color: rgba(143, 188, 187, 0.4);
+    background: linear-gradient(135deg,
+        rgba(94, 129, 172, 0.6),
+        rgba(143, 188, 187, 0.4));
+    border-color: rgba(143, 188, 187, 0.3);
 
     .nc-toggle-icon {
       color: #81a1c1;
@@ -119,12 +116,11 @@ window.nc-window > windowhandle > .background {
 
 .nc-toggle-icon {
   font-size: 1.4rem;
-  color: #eceff4;
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
 }
 
 .nc-toggle-label {
   font-size: 0.68rem;
-  color: rgba(216, 222, 233, 0.7);
 }
 
 // ── Sliders ────────────────────────────────────────
@@ -133,7 +129,7 @@ window.nc-window > windowhandle > .background {
 }
 
 .nc-slider-row {
-  background: rgba(46, 52, 64, 0.5);
+  background: rgba(46, 52, 64, 0.4);
   border-radius: 999px;
   padding: 8px 14px;
 }
@@ -215,7 +211,7 @@ slider {
 }
 
 .nc-notif {
-  background: rgba(46, 52, 64, 0.45);
+  background: rgba(46, 52, 64, 0.4);
   border-radius: 12px;
   border: 1px solid rgba(94, 129, 172, 0.1);
   padding: 10px;
@@ -302,15 +298,15 @@ window.toast-window {
   }
 }
 
-window.toast-window > .background,
-window.toast-window > windowhandle,
-window.toast-window > windowhandle > .background {
+window.toast-window>.background,
+window.toast-window>windowhandle,
+window.toast-window>windowhandle>.background {
   background: transparent;
   background-color: transparent;
 }
 
-.toast-window > *,
-.toast-window > * > *,
+.toast-window>*,
+.toast-window>*>*,
 .toast-list {
   background: transparent;
   background-color: transparent;
@@ -318,11 +314,11 @@ window.toast-window > windowhandle > .background {
 
 // ── Toast Card ─────────────────────────────────────
 .toast-card {
-  background: #1b1816;
+  background: rgba(27, 24, 22, 0.75);
   border-radius: 14px;
   border: 1px solid rgba(94, 129, 172, 0.22);
   box-shadow:
-    0 6px 28px rgba(0, 0, 0, 0.55),
+    0 6px 28px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(136, 192, 208, 0.07);
   padding: 12px 14px;
   min-width: 300px;

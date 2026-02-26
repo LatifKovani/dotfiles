@@ -7,6 +7,7 @@ import Ram from "./bar/Ram"
 import Cpu from "./bar/Cpu"
 import Bluetooth from "./bar/Bluetooth"
 import { toggleNc, ncVisible } from "./nc/NotificationCenter"
+import { toggleDashboard, dashboardOpen } from "./dashboard/Dashboard"
 import { createState } from "ags"
 import Notifd from "gi://AstalNotifd"
 
@@ -52,6 +53,19 @@ function NcButton() {
   )
 }
 
+function ClockButton() {
+  return (
+    <button
+      cssClasses={dashboardOpen((o: boolean) =>
+        o ? ["clock-btn", "active"] : ["clock-btn"],
+      )}
+      onClicked={toggleDashboard}
+    >
+      <Clock />
+    </button>
+  )
+}
+
 export default function Bar(monitor: number) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
@@ -64,7 +78,7 @@ export default function Bar(monitor: number) {
       visible
     >
       <box halign={Gtk.Align.CENTER} cssClasses={["bar-center"]} spacing={6}>
-        <Clock />
+        <ClockButton />
         <Sep />
         <Workspaces />
         <Sep />

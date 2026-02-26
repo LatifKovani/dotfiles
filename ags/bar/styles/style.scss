@@ -45,7 +45,14 @@ $magenta: #b48ead;
 .cpu-icon,
 .cpu-temp-icon,
 .wifi-btn label,
-.bt-btn label {
+.bt-btn label,
+.cal-nav-btn,
+.pomo-dot,
+.pomo-btn,
+.todo-check,
+.todo-del-btn,
+.todo-add-btn,
+.todo-empty-icon {
   font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
 }
 
@@ -53,3 +60,4 @@ $magenta: #b48ead;
 @import "bar";
 @import "osd";
 @import "nc";
+@import "dashboard";

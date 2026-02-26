@@ -1,0 +1,385 @@
+// ── Dashboard Window ───────────────────────────────
+.dashboard-window,
+window.dashboard-window {
+  background: transparent;
+  background-color: transparent;
+
+  decoration {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  decoration-overlay {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  undershoot,
+  overshoot {
+    background: transparent;
+  }
+}
+
+window.dashboard-window>.background,
+window.dashboard-window>windowhandle,
+window.dashboard-window>windowhandle>.background {
+  background: transparent;
+  background-color: transparent;
+}
+
+// ── Panel ──────────────────────────────────────────
+.dashboard {
+  background: rgba(27, 24, 22, 0.55);
+  border-right: 1px solid rgba(143, 188, 187, 0.07);
+  min-height: 100%;
+}
+
+.dash-divider {
+  background: rgba(255, 255, 255, 0.05);
+  margin: 0 16px;
+}
+
+.dash-section {
+  padding: 18px 16px;
+}
+
+.dash-section-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(216, 222, 233, 0.3);
+  margin-bottom: 2px;
+}
+
+// ── Calendar ───────────────────────────────────────
+.cal-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #eceff4;
+}
+
+.cal-nav-btn {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  color: rgba(216, 222, 233, 0.35);
+  transition: all 120ms ease;
+  min-width: 28px;
+
+  &:hover {
+    background: rgba(59, 66, 82, 0.5);
+    color: #eceff4;
+  }
+}
+
+.cal-dayname {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(216, 222, 233, 0.28);
+  letter-spacing: 0.3px;
+  min-width: 32px;
+}
+
+.cal-day {
+  font-size: 0.78rem;
+  color: rgba(216, 222, 233, 0.65);
+  border-radius: 6px;
+  padding: 4px 2px;
+  min-width: 32px;
+  min-height: 26px;
+  transition: background 120ms ease;
+
+  &.empty {
+    color: transparent;
+  }
+
+  &.today {
+    background: linear-gradient(135deg, #5e81ac, #8fbcbb);
+    color: #1b1816;
+    font-weight: 700;
+    border-radius: 6px;
+  }
+}
+
+// ── Pomodoro ───────────────────────────────────────
+.pomo-tabs {
+  border-radius: 8px;
+  background: rgba(27, 24, 22, 0.4);
+  padding: 3px;
+}
+
+.pomo-tab {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 0.72rem;
+  color: rgba(216, 222, 233, 0.4);
+  transition: all 150ms ease;
+
+  &:hover {
+    color: rgba(216, 222, 233, 0.7);
+  }
+
+  &.active {
+    background: rgba(94, 129, 172, 0.35);
+    color: #8fbcbb;
+    font-weight: 600;
+  }
+}
+
+.pomo-timer {
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: #eceff4;
+  letter-spacing: -3px;
+  margin: 2px 0;
+}
+
+.pomo-sessions {
+  font-size: 0.68rem;
+  color: rgba(216, 222, 233, 0.3);
+}
+
+.pomo-dot {
+  font-size: 0.5rem;
+  color: rgba(216, 222, 233, 0.15);
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+
+  &.filled {
+    color: #8fbcbb;
+  }
+}
+
+.pomo-btn {
+  background: rgba(46, 52, 64, 0.5);
+  border: none;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 0.78rem;
+  color: rgba(216, 222, 233, 0.8);
+  transition: all 150ms ease;
+  font-family:
+    "JetBrains Mono Nerd Font", "Symbols Nerd Font", "SF Pro Display",
+    sans-serif;
+
+  &:hover {
+    background: rgba(67, 76, 94, 0.7);
+    color: #eceff4;
+  }
+
+  &.pomo-btn-start {
+    background: linear-gradient(135deg,
+        rgba(163, 190, 140, 0.45),
+        rgba(143, 188, 187, 0.3));
+    color: #eceff4;
+    font-weight: 600;
+    padding: 7px 24px;
+
+    &:hover {
+      background: linear-gradient(135deg,
+          rgba(163, 190, 140, 0.65),
+          rgba(143, 188, 187, 0.5));
+    }
+  }
+
+  &.pomo-btn-pause {
+    background: linear-gradient(135deg,
+        rgba(235, 203, 139, 0.4),
+        rgba(208, 135, 112, 0.3));
+    color: #eceff4;
+    padding: 7px 24px;
+  }
+
+  &.pomo-btn-reset {
+    color: rgba(216, 222, 233, 0.45);
+  }
+
+  &.pomo-btn-edit {
+    padding: 7px 12px;
+    color: rgba(216, 222, 233, 0.4);
+
+    &.active {
+      background: rgba(94, 129, 172, 0.3);
+      color: #81a1c1;
+    }
+  }
+}
+
+.pomo-edit-row {
+  background: rgba(27, 24, 22, 0.4);
+  border-radius: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pomo-edit-label {
+  font-size: 0.75rem;
+  color: rgba(216, 222, 233, 0.55);
+}
+
+.pomo-edit-val {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #eceff4;
+  min-width: 36px;
+}
+
+.pomo-edit-btn {
+  background: rgba(59, 66, 82, 0.6);
+  border: none;
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-size: 1rem;
+  color: #eceff4;
+  min-width: 30px;
+  transition: background 120ms ease;
+
+  &:hover {
+    background: rgba(94, 129, 172, 0.45);
+  }
+}
+
+// ── Todo ───────────────────────────────────────────
+.todo-count {
+  font-size: 0.68rem;
+  color: rgba(216, 222, 233, 0.3);
+}
+
+.todo-input {
+  background: rgba(27, 24, 22, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: #eceff4;
+  font-size: 0.82rem;
+  caret-color: #8fbcbb;
+
+  &:focus {
+    border-color: rgba(143, 188, 187, 0.35);
+    background: rgba(27, 24, 22, 0.7);
+    outline: none;
+  }
+}
+
+.todo-add-btn {
+  background: linear-gradient(135deg,
+      rgba(94, 129, 172, 0.55),
+      rgba(143, 188, 187, 0.4));
+  border: none;
+  border-radius: 8px;
+  padding: 7px 13px;
+  font-size: 1rem;
+  color: #eceff4;
+  transition: all 150ms ease;
+
+  &:hover {
+    background: linear-gradient(135deg,
+        rgba(94, 129, 172, 0.75),
+        rgba(143, 188, 187, 0.6));
+  }
+}
+
+.todo-scroll {
+  border-radius: 8px;
+}
+
+.todo-item {
+  background: rgba(46, 52, 64, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 8px 10px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: rgba(46, 52, 64, 0.6);
+  }
+
+  &.done {
+    background: rgba(27, 24, 22, 0.25);
+    border-color: transparent;
+  }
+}
+
+.todo-check {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 0 4px;
+  font-size: 1rem;
+  color: rgba(216, 222, 233, 0.25);
+  transition: color 150ms ease;
+
+  &.checked {
+    color: #a3be8c;
+  }
+
+  &:hover {
+    color: #8fbcbb;
+    background: rgba(143, 188, 187, 0.1);
+  }
+}
+
+.todo-text {
+  font-size: 0.82rem;
+  color: #d8dee9;
+
+  &.done {
+    color: rgba(216, 222, 233, 0.28);
+    text-decoration: line-through;
+  }
+}
+
+.todo-del-btn {
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 0 5px;
+  font-size: 0.78rem;
+  color: rgba(216, 222, 233, 0.18);
+  transition: all 150ms ease;
+
+  &:hover {
+    color: #bf616a;
+    background: rgba(191, 97, 106, 0.15);
+  }
+}
+
+.todo-empty {
+  padding: 28px 0;
+}
+
+.todo-empty-icon {
+  font-size: 1.8rem;
+  color: rgba(216, 222, 233, 0.12);
+}
+
+.todo-empty-label {
+  font-size: 0.78rem;
+  color: rgba(216, 222, 233, 0.22);
+}
+
+// ── Clock button in bar ────────────────────────────
+.clock-btn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 0 6px;
+  transition: all 150ms ease;
+
+  &:hover {
+    background: rgba(59, 66, 82, 0.6);
+  }
+
+  &.active {
+    background: rgba(94, 129, 172, 0.2);
+
+    label {
+      color: #8fbcbb;
+    }
+  }
+}

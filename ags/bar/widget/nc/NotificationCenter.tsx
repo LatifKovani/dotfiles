@@ -49,6 +49,7 @@ export default function NotificationCenter() {
   return (
     <window
       cssClasses={["nc-window"]}
+      namespace="notification-center"
       layer={Astal.Layer.OVERLAY}
       anchor={TOP | RIGHT}
       marginTop={4}

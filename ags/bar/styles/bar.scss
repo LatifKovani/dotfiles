@@ -225,3 +225,24 @@
   font-size: 11px;
   color: $cyan;
 }
+
+// ── Clock Button (dashboard toggle) ───────────────
+.clock-btn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 0 6px;
+  transition: all 150ms ease;
+
+  &:hover {
+    background: rgba(59, 66, 82, 0.6);
+  }
+
+  &.active {
+    background: rgba(94, 129, 172, 0.2);
+
+    label {
+      color: #8fbcbb;
+    }
+  }
+}
