@@ -1,16 +1,56 @@
-// ── Notification Center ────────────────────────────
-.nc-window {
+// ── NC Window ──────────────────────────────────────
+// Window + ALL intermediate containers = transparent
+// ONLY .nc-panel gets the background color
+.nc-window,
+window.nc-window {
   background: transparent;
+  background-color: transparent;
+  border-radius: 20px;
+
+  decoration {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  decoration-overlay {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  undershoot,
+  overshoot {
+    background: transparent;
+  }
 }
 
+// Target libadwaita .background wrapper on NC window too
+window.nc-window>.background,
+window.nc-window>windowhandle,
+window.nc-window>windowhandle>.background {
+  background: transparent;
+  background-color: transparent;
+}
+
+// ── Panel — direct child of window, no revealer ────
 .nc-panel {
-  background: rgba(20, 18, 16, 0.92);
-  border-radius: 20px;
-  border: 1px solid rgba(94, 129, 172, 0.25);
-  box-shadow:
-    0 8px 40px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(136, 192, 208, 0.07);
+  background: #1b1816;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   padding: 16px;
+  opacity: 0;
+  margin-top: -8px;
+  transition:
+    opacity 200ms ease,
+    margin-top 200ms ease;
+
+  &.visible {
+    opacity: 1;
+    margin-top: 0px;
+  }
 }
 
 // ── Header ─────────────────────────────────────────
@@ -43,7 +83,6 @@
 .nc-toggle {
   background: rgba(46, 52, 64, 0.6);
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 10px 14px;
   min-width: 72px;
   min-height: 64px;
@@ -58,6 +97,10 @@
         rgba(94, 129, 172, 0.7),
         rgba(143, 188, 187, 0.5));
     border-color: rgba(143, 188, 187, 0.4);
+
+    .nc-toggle-icon {
+      color: #81a1c1;
+    }
   }
 }
 
@@ -77,112 +120,51 @@
 }
 
 .nc-slider-row {
-  padding: 0;
+  background: rgba(46, 52, 64, 0.5);
+  border-radius: 999px;
+  padding: 8px 14px;
 }
 
 .nc-slider-icon {
-  font-size: 1.1rem;
-  color: #8fbcbb;
-  min-width: 22px;
+  font-size: 1rem;
+  color: #eceff4;
+  min-width: 18px;
 }
 
 .nc-slider-value {
-  font-size: 0.75rem;
-  color: rgba(216, 222, 233, 0.6);
-  min-width: 34px;
+  font-size: 0.72rem;
+  color: rgba(216, 222, 233, 0.5);
+  min-width: 32px;
 }
 
+scale,
 slider {
   border-radius: 999px;
-  min-height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-
-  highlight,
-  progress {
-    background: linear-gradient(90deg, #5e81ac, #8fbcbb);
-    border-radius: 999px;
-  }
+  min-height: 4px;
+  background: transparent;
 
   trough {
     border-radius: 999px;
-    min-height: 6px;
-  }
-}
-
-// ── Media Player ───────────────────────────────────
-.nc-media {
-  padding: 0 2px;
-}
-
-.nc-media-empty {
-  padding: 8px 0;
-}
-
-.nc-media-empty-icon {
-  font-size: 1.6rem;
-  color: rgba(216, 222, 233, 0.25);
-}
-
-.nc-media-empty-label {
-  font-size: 0.82rem;
-  color: rgba(216, 222, 233, 0.35);
-}
-
-.nc-media-player {
-  background: rgba(46, 52, 64, 0.45);
-  border-radius: 14px;
-  border: 1px solid rgba(94, 129, 172, 0.1);
-  padding: 12px;
-}
-
-.nc-media-art-container {
-  min-width: 56px;
-  min-height: 56px;
-}
-
-.nc-media-art {
-  border-radius: 10px;
-}
-
-.nc-media-art-fallback {
-  font-size: 2.5rem;
-  color: rgba(216, 222, 233, 0.3);
-  min-width: 56px;
-  min-height: 56px;
-}
-
-.nc-media-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #eceff4;
-}
-
-.nc-media-artist {
-  font-size: 0.78rem;
-  color: rgba(216, 222, 233, 0.6);
-}
-
-.nc-media-controls {
-  margin-top: 4px;
-}
-
-.nc-media-btn {
-  background: transparent;
-  border: none;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 1rem;
-  color: rgba(216, 222, 233, 0.6);
-  transition: all 120ms ease;
-
-  &:hover {
-    color: #eceff4;
-    background: rgba(94, 129, 172, 0.2);
+    min-height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
   }
 
-  &.play {
-    color: #8fbcbb;
-    font-size: 1.2rem;
+  highlight,
+  progress {
+    background: #eceff4;
+    border-radius: 999px;
+    min-height: 4px;
+    border: none;
+  }
+
+  slider {
+    background: #eceff4;
+    border-radius: 999px;
+    min-width: 4px;
+    min-height: 4px;
+    border: none;
+    box-shadow: none;
   }
 }
 
@@ -226,11 +208,8 @@ slider {
   padding: 10px;
 }
 
-.nc-notif-icon {
-  border-radius: 8px;
-}
-
 .nc-notif-icon-fallback {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
   font-size: 1.4rem;
   color: rgba(216, 222, 233, 0.4);
   min-width: 32px;
@@ -284,4 +263,82 @@ slider {
 .nc-notif-empty-label {
   font-size: 0.82rem;
   color: rgba(216, 222, 233, 0.3);
+}
+
+// ── Toast Window ───────────────────────────────────
+// Libadwaita adds a .background node inside the window
+// that paints a solid rect — kill it explicitly
+.toast-window,
+window.toast-window {
+  background: transparent;
+  background-color: transparent;
+
+  decoration {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  decoration-overlay {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  undershoot,
+  overshoot {
+    background: transparent;
+  }
+}
+
+// Target the libadwaita .background wrapper node
+window.toast-window>.background,
+window.toast-window>windowhandle,
+window.toast-window>windowhandle>.background {
+  background: transparent;
+  background-color: transparent;
+}
+
+// Target every intermediate node
+.toast-window>*,
+.toast-window>*>*,
+.toast-list {
+  background: transparent;
+  background-color: transparent;
+}
+
+// ── Toast Card — ONLY this gets the background ─────
+.toast-card {
+  background: #1b1816;
+  border-radius: 14px;
+  border: 1px solid rgba(94, 129, 172, 0.22);
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(136, 192, 208, 0.07);
+  padding: 12px 14px;
+  min-width: 300px;
+}
+
+.toast-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 1.5rem;
+  color: #8fbcbb;
+  min-width: 28px;
+}
+
+.toast-app {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8fbcbb;
+}
+
+.toast-summary {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #eceff4;
+}
+
+.toast-body {
+  font-size: 0.78rem;
+  color: rgba(216, 222, 233, 0.7);
 }

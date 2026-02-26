@@ -3,10 +3,15 @@ import { createState } from "ags"
 import { createPoll } from "ags/time"
 import Toggles from "./Toggles"
 import Sliders from "./Sliders"
-import MediaPlayer from "./MediaPlayer"
 import Notifications from "./Notifications"
 
 export const [ncVisible, setNcVisible] = createState(false)
+
+let _ncVisible = false
+export function toggleNc() {
+  _ncVisible = !_ncVisible
+  setNcVisible(_ncVisible)
+}
 
 function Header() {
   const time = createPoll("", 1000, "date '+%H:%M'")
@@ -46,33 +51,27 @@ export default function NotificationCenter() {
       cssClasses={["nc-window"]}
       layer={Astal.Layer.OVERLAY}
       anchor={TOP | RIGHT}
-      marginTop={10}
-      marginRight={8}
+      marginTop={4}
+      marginRight={0}
       visible={ncVisible}
       keymode={Astal.Keymode.ON_DEMAND}
     >
-      <revealer
-        revealChild={ncVisible}
-        transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
-        transitionDuration={250}
+      <box
+        cssClasses={ncVisible((v: boolean) =>
+          v ? ["nc-panel", "visible"] : ["nc-panel"],
+        )}
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={14}
+        widthRequest={340}
       >
-        <box
-          cssClasses={["nc-panel"]}
-          orientation={Gtk.Orientation.VERTICAL}
-          spacing={14}
-          widthRequest={340}
-        >
-          <Header />
-          <Divider />
-          <Toggles />
-          <Divider />
-          <Sliders />
-          <Divider />
-          <MediaPlayer />
-          <Divider />
-          <Notifications />
-        </box>
-      </revealer>
+        <Header />
+        <Divider />
+        <Toggles />
+        <Divider />
+        <Sliders />
+        <Divider />
+        <Notifications />
+      </box>
     </window>
   )
 }

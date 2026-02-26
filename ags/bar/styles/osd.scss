@@ -1,44 +1,111 @@
-// ── OSD ────────────────────────────────────────────
+// ── OSD Window ──────────────────────────────────────────────────────────────
+// Kill every possible GTK background that causes the square
 .osd-window {
   background: transparent;
+  border-radius: 999px;
+
+  >* {
+    background: transparent;
+  }
+
+  decoration {
+    box-shadow: none;
+    border: none;
+  }
+
+  decoration-overlay {
+    box-shadow: none;
+    border: none;
+  }
+
+  undershoot,
+  overshoot {
+    background: transparent;
+  }
 }
 
-.osd-container {
+window.osd-window {
+  background: transparent;
+  background-color: transparent;
+}
+
+// ── Pill ─────────────────────────────────────────────────────────────────────
+.osd-pill {
   background: rgba(#1b1816, 0.88);
   border-radius: 999px;
-  padding: 10px 22px;
-  border: 1px solid rgba($cyan, 0.18);
+  border: 1px solid rgba(#8fbcbb, 0.14);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(#88c0d0, 0.06);
+    0 4px 20px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(#88c0d0, 0.07);
+  padding: 8px 20px;
+  min-height: 36px;
 }
 
+// ── Bar row (volume / brightness / mic) ──────────────────────────────────────
+.osd-bar-row {
+  min-width: 220px;
+}
+
+// ── Caps lock row ────────────────────────────────────────────────────────────
+.osd-caps-row {
+  min-width: 160px;
+}
+
+// ── Icons — keep Nerd Font for glyphs ────────────────────────────────────────
 .osd-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
   font-size: 18px;
-  color: $cyan;
-  min-width: 22px;
+  color: #eceff4;
+  min-width: 20px;
 }
 
-.osd-label {
+.osd-caps-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 18px;
+  color: #eceff4;
+  min-width: 20px;
+}
+
+// ── Caps label — SF Pro ───────────────────────────────────────────────────────
+.osd-caps-label {
+  font-family: "SF Pro Display", "SF Pro Text", "SF Pro", sans-serif;
   font-size: 13px;
-  font-weight: bold;
-  color: $white1;
-  min-width: 38px;
+  font-weight: 600;
+  color: #eceff4;
 }
 
+// ── Level bar ────────────────────────────────────────────────────────────────
 .osd-bar {
   border-radius: 999px;
-  min-height: 6px;
+  min-height: 5px;
+
+  trough {
+    border-radius: 999px;
+    min-height: 5px;
+    background: rgba(#eceff4, 0.15);
+    border: none;
+    padding: 0;
+  }
+
+  block.filled,
+  highlight,
+  progress {
+    background: #eceff4;
+    border-radius: 999px;
+    min-height: 5px;
+    border: none;
+  }
+
+  block.empty {
+    background: transparent;
+    border: none;
+  }
 
   block {
     border-radius: 999px;
-  }
-
-  &.filled block {
-    background: linear-gradient(90deg, $blue0, $cyan);
-  }
-
-  &.empty block {
-    background: rgba($white1, 0.12);
+    min-height: 5px;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
 }

@@ -1,6 +1,6 @@
 import Battery from "gi://AstalBattery"
 import { createBinding, createState } from "ags"
-import GLib from "gi://GLib"
+import { notify } from "../notify"
 
 function batteryIcon(p: number, charging: boolean): string {
   if (charging) return "󰂄"
@@ -19,40 +19,41 @@ function checkAndNotify(percent: number, charging: boolean) {
     notified.clear()
     return
   }
-
   const thresholds = [
     {
       level: 0.05,
-      title: "Critical Battery",
+      summary: "Critical Battery",
       body: "5% remaining! Plug in now.",
-      urgency: "critical",
+      urgency: 2 as const,
     },
     {
       level: 0.1,
-      title: "Very Low Battery",
+      summary: "Very Low Battery",
       body: "10% remaining.",
-      urgency: "critical",
+      urgency: 2 as const,
     },
     {
       level: 0.15,
-      title: "Low Battery",
+      summary: "Low Battery",
       body: "15% remaining.",
-      urgency: "normal",
+      urgency: 1 as const,
     },
     {
       level: 0.25,
-      title: "Low Battery",
+      summary: "Low Battery",
       body: "25% remaining.",
-      urgency: "normal",
+      urgency: 1 as const,
     },
   ]
-
   for (const t of thresholds) {
-    if (percent <= t.level && !notified.has(t.level)) {
-      notified.add(t.level)
-      GLib.spawn_command_line_async(
-        `notify-send -u ${t.urgency} -i battery-low "${t.title}" "${t.body}"`,
-      )
+    if (percent <= t.level && !notified.has(t.level * 100)) {
+      notified.add(t.level * 100)
+      notify({
+        appName: "Battery",
+        summary: t.summary,
+        body: t.body,
+        urgency: t.urgency,
+      })
     }
   }
 }
@@ -60,7 +61,6 @@ function checkAndNotify(percent: number, charging: boolean) {
 export default function BatteryWidget() {
   const bat = Battery.get_default()
   const percent = createBinding(bat, "percentage")
-
   const [icon, setIcon] = createState(batteryIcon(bat.percentage, bat.charging))
 
   bat.connect("notify::percentage", () => {
@@ -70,16 +70,21 @@ export default function BatteryWidget() {
 
   bat.connect("notify::charging", () => {
     setIcon(batteryIcon(bat.percentage, bat.charging))
-    checkAndNotify(bat.percentage, bat.charging)
-
+    const pct = Math.round(bat.percentage * 100)
     if (bat.charging) {
-      GLib.spawn_command_line_async(
-        `notify-send -u low -i battery-caution "Charger Connected" "Battery is now charging at ${Math.round(bat.percentage * 100)}%"`,
-      )
+      notify({
+        appName: "Battery",
+        summary: "Charger Connected",
+        body: `Charging at ${pct}%`,
+        urgency: 0,
+      })
     } else {
-      GLib.spawn_command_line_async(
-        `notify-send -u low -i battery "Charger Disconnected" "Battery at ${Math.round(bat.percentage * 100)}%"`,
-      )
+      notify({
+        appName: "Battery",
+        summary: "Charger Disconnected",
+        body: `Battery at ${pct}%`,
+        urgency: 0,
+      })
     }
   })
 

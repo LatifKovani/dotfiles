@@ -1,14 +1,7 @@
 import { createState } from "ags"
 import { Gtk } from "ags/gtk4"
-
-interface Notification {
-  id: number
-  appName: string
-  summary: string
-  body: string
-  time: number
-  dismiss: () => void
-}
+import Notifd from "gi://AstalNotifd"
+import GLib from "gi://GLib"
 
 function timeAgo(time: number): string {
   const diff = Math.floor(Date.now() / 1000) - time
@@ -18,96 +11,125 @@ function timeAgo(time: number): string {
   return `${Math.floor(diff / 86400)}d ago`
 }
 
-function NotifCard({ notif }: { notif: Notification }) {
-  return (
-    <box cssClasses={["nc-notif"]} spacing={10}>
-      <box cssClasses={["nc-notif-icon-box"]} valign={Gtk.Align.START}>
-        <label cssClasses={["nc-notif-icon-fallback"]} label="󰍡" />
-      </box>
-      <box orientation={Gtk.Orientation.VERTICAL} hexpand spacing={2}>
-        <box>
-          <label
-            cssClasses={["nc-notif-app"]}
-            label={notif.appName || "Unknown"}
-            halign={Gtk.Align.START}
-            hexpand
-            xalign={0}
-          />
-          <label
-            cssClasses={["nc-notif-time"]}
-            label={timeAgo(notif.time)}
-            halign={Gtk.Align.END}
-          />
-        </box>
-        {notif.summary ? (
-          <label
-            cssClasses={["nc-notif-summary"]}
-            label={notif.summary}
-            halign={Gtk.Align.START}
-            xalign={0}
-            wrap
-            maxWidthChars={36}
-          />
-        ) : null}
-        {notif.body ? (
-          <label
-            cssClasses={["nc-notif-body"]}
-            label={notif.body}
-            halign={Gtk.Align.START}
-            xalign={0}
-            wrap
-            maxWidthChars={36}
-          />
-        ) : null}
-      </box>
-      <button
-        cssClasses={["nc-notif-close"]}
-        label="󰅖"
-        valign={Gtk.Align.START}
-        onClicked={() => notif.dismiss()}
-      />
-    </box>
-  )
-}
+function makeNotifCard(n: any): Gtk.Widget {
+  const appName = String(n.app_name || "Unknown")
+  const summary = String(n.summary || "")
+  const body = String(n.body || "")
+  const time = timeAgo(Number(n.time) || Math.floor(Date.now() / 1000))
 
-function EmptyNotif() {
-  return (
-    <box
-      cssClasses={["nc-notif-empty"]}
-      orientation={Gtk.Orientation.VERTICAL}
-      halign={Gtk.Align.CENTER}
-      spacing={8}
-    >
-      <label cssClasses={["nc-notif-empty-icon"]} label="󰂚" />
-      <label cssClasses={["nc-notif-empty-label"]} label="No notifications" />
-    </box>
-  )
-}
+  const appLabel = new Gtk.Label({
+    label: appName,
+    halign: Gtk.Align.START,
+    hexpand: true,
+    xalign: 0,
+  })
+  appLabel.add_css_class("nc-notif-app")
 
-function NotifList({ notifications }: { notifications: Notification[] }) {
-  if (notifications.length === 0) return <EmptyNotif />
-  return (
-    <box orientation={Gtk.Orientation.VERTICAL} spacing={6}>
-      {notifications.map((n) => (
-        <NotifCard notif={n} />
-      ))}
-    </box>
-  )
+  const timeLabel = new Gtk.Label({ label: time, halign: Gtk.Align.END })
+  timeLabel.add_css_class("nc-notif-time")
+
+  const topRow = new Gtk.Box({ spacing: 4 })
+  topRow.append(appLabel)
+  topRow.append(timeLabel)
+
+  const inner = new Gtk.Box({
+    orientation: Gtk.Orientation.VERTICAL,
+    hexpand: true,
+    spacing: 2,
+  })
+  inner.append(topRow)
+
+  if (summary) {
+    const s = new Gtk.Label({
+      label: summary,
+      halign: Gtk.Align.START,
+      xalign: 0,
+      wrap: true,
+      max_width_chars: 36,
+    })
+    s.add_css_class("nc-notif-summary")
+    inner.append(s)
+  }
+
+  if (body) {
+    const b = new Gtk.Label({
+      label: body,
+      halign: Gtk.Align.START,
+      xalign: 0,
+      wrap: true,
+      max_width_chars: 36,
+    })
+    b.add_css_class("nc-notif-body")
+    inner.append(b)
+  }
+
+  const iconLabel = new Gtk.Label({ label: "󰍡", valign: Gtk.Align.START })
+  iconLabel.add_css_class("nc-notif-icon-fallback")
+
+  const closeBtn = new Gtk.Button({ label: "󰅖", valign: Gtk.Align.START })
+  closeBtn.add_css_class("nc-notif-close")
+
+  const row = new Gtk.Box({ spacing: 10 })
+  row.add_css_class("nc-notif")
+  row.append(iconLabel)
+  row.append(inner)
+  row.append(closeBtn)
+
+  closeBtn.connect("clicked", () => {
+    n.dismiss()
+    const parent = row.get_parent()
+    if (parent) (parent as Gtk.Box).remove(row)
+  })
+
+  return row
 }
 
 export default function Notifications() {
-  const [notifications, setNotifications] = createState<Notification[]>([])
+  const notifd = Notifd.get_default()
+  const [isEmpty, setIsEmpty] = createState(
+    notifd.get_notifications().length === 0,
+  )
 
-  try {
-    const Notifd = (globalThis as any).imports?.gi?.AstalNotifd
-    if (Notifd) {
-      const notifd = Notifd.get_default()
-      setNotifications([...notifd.notifications])
-      notifd.connect("notify::notifications", () => {
-        setNotifications([...notifd.notifications])
-      })
+  const listBox = new Gtk.Box({
+    orientation: Gtk.Orientation.VERTICAL,
+    spacing: 6,
+  })
+
+  const cardMap = new Map<number, Gtk.Widget>()
+
+  const update = () => {
+    const ns = notifd.get_notifications()
+    setIsEmpty(ns.length === 0)
+
+    // Remove cards no longer present
+    for (const [id, widget] of cardMap) {
+      if (!ns.find((n: any) => n.id === id)) {
+        listBox.remove(widget)
+        cardMap.delete(id)
+      }
     }
-  } catch (_) { }
+
+    // Add new cards
+    for (const n of ns) {
+      if (!cardMap.has(n.id)) {
+        const card = makeNotifCard(n)
+        cardMap.set(n.id, card)
+        listBox.prepend(card) // newest on top
+      }
+    }
+  }
+
+  update()
+
+  // Connect to both signals — whichever fires on this version
+  notifd.connect("notified", update)
+  notifd.connect("resolved", update)
+
+  // Fallback poll every 2s in case signals don't fire
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 2000, () => {
+    update()
+    return GLib.SOURCE_CONTINUE
+  })
 
   return (
     <box
@@ -118,7 +140,7 @@ export default function Notifications() {
       <box cssClasses={["nc-notif-header"]}>
         <label
           cssClasses={["nc-notif-title"]}
-          label="Notifications"
+          label="NOTIFICATIONS"
           hexpand
           halign={Gtk.Align.START}
         />
@@ -126,13 +148,14 @@ export default function Notifications() {
           cssClasses={["nc-notif-clear-btn"]}
           label="Clear All"
           onClicked={() => {
-            const ns = notifications(
-              (n: Notification[]) => n,
-            ) as unknown as Notification[]
-            for (const n of ns) n.dismiss()
+            for (const n of notifd.get_notifications()) n.dismiss()
+            for (const [, widget] of cardMap) listBox.remove(widget)
+            cardMap.clear()
+            setIsEmpty(true)
           }}
         />
       </box>
+
       <scrolledwindow
         cssClasses={["nc-notif-scroll"]}
         vexpand
@@ -140,11 +163,22 @@ export default function Notifications() {
         vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
         heightRequest={200}
       >
-        <NotifList
-          notifications={
-            notifications((n: Notification[]) => n) as unknown as Notification[]
-          }
-        />
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={6}>
+          <box
+            cssClasses={["nc-notif-empty"]}
+            orientation={Gtk.Orientation.VERTICAL}
+            halign={Gtk.Align.CENTER}
+            spacing={8}
+            visible={isEmpty}
+          >
+            <label cssClasses={["nc-notif-empty-icon"]} label="󰂚" />
+            <label
+              cssClasses={["nc-notif-empty-label"]}
+              label="No notifications"
+            />
+          </box>
+          {listBox}
+        </box>
       </scrolledwindow>
     </box>
   )

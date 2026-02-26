@@ -6,41 +6,36 @@ import Wifi from "./bar/Wireless"
 import Ram from "./bar/Ram"
 import Cpu from "./bar/Cpu"
 import Bluetooth from "./bar/Bluetooth"
-import { setNcVisible, ncVisible } from "./nc/NotificationCenter"
+import { toggleNc, ncVisible } from "./nc/NotificationCenter"
 import { createState } from "ags"
+import Notifd from "gi://AstalNotifd"
 
 function Sep() {
   return <box cssClasses={["bar-sep"]} widthRequest={1} />
 }
 
 function NcButton() {
-  const [count, setCount] = createState(0)
-  const [hasNotifs, setHasNotifs] = createState(false)
+  const notifd = Notifd.get_default()
+  const [count, setCount] = createState(notifd.get_notifications().length)
+  const [hasNotifs, setHasNotifs] = createState(
+    notifd.get_notifications().length > 0,
+  )
 
-  try {
-    const Notifd = (globalThis as any).imports?.gi?.AstalNotifd
-    if (Notifd) {
-      const notifd = Notifd.get_default()
-      setCount(notifd.notifications.length)
-      setHasNotifs(notifd.notifications.length > 0)
-      notifd.connect("notify::notifications", () => {
-        const len = notifd.notifications.length
-        setCount(len)
-        setHasNotifs(len > 0)
-      })
-    }
-  } catch (_) { }
-
-  function toggle() {
-    setNcVisible(!ncVisible.get())
+  const update = () => {
+    const len = notifd.get_notifications().length
+    setCount(len)
+    setHasNotifs(len > 0)
   }
+
+  notifd.connect("notified", update)
+  notifd.connect("resolved", update)
 
   return (
     <button
       cssClasses={ncVisible((v: boolean) =>
         v ? ["nc-bar-btn", "active"] : ["nc-bar-btn"],
       )}
-      onClicked={toggle}
+      onClicked={toggleNc}
     >
       <box spacing={4}>
         <label

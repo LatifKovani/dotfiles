@@ -21,14 +21,32 @@ $yellow: #ebcb8b;
 $green: #a3be8c;
 $magenta: #b48ead;
 
-$font: "SF Pro Regular";
-
-// ── Base ───────────────────────────────────────────
+// ── Base — SF Pro everywhere ───────────────────────
 * {
-  font-family: $font, "JetBrains Mono Nerd Font";
+  font-family: "SF Pro Display", "SF Pro Text", "SF Pro", sans-serif;
   font-size: 13px;
   color: $white1;
   background: transparent;
+}
+
+// ── Nerd Font override for icon-only labels ────────
+.osd-icon,
+.osd-caps-icon,
+.nc-slider-icon,
+.nc-media-empty-icon,
+.nc-media-art-fallback,
+.nc-media-btn,
+.nc-notif-icon-fallback,
+.nc-notif-close,
+.nc-toggle-icon,
+.nc-bar-icon,
+.ram-icon,
+.battery-icon,
+.cpu-icon,
+.cpu-temp-icon,
+.wifi-btn label,
+.bt-btn label {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
 }
 
 // ── Modules ────────────────────────────────────────
