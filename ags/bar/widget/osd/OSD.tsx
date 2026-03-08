@@ -3,7 +3,6 @@ import Wp from "gi://AstalWp"
 import { createState } from "ags"
 import GLib from "gi://GLib"
 
-// ── Hide timer ───────────────────────────────────────────────────────────────
 let hideTimeout: number | null = null
 function scheduleHide(setVisible: (v: boolean) => void) {
   if (hideTimeout !== null) GLib.source_remove(hideTimeout)
@@ -14,7 +13,6 @@ function scheduleHide(setVisible: (v: boolean) => void) {
   })
 }
 
-// ── Icons ────────────────────────────────────────────────────────────────────
 function volumeIcon(vol: number, muted: boolean): string {
   if (muted || vol === 0) return "󰝟"
   if (vol < 0.33) return "󰕿"
@@ -30,7 +28,6 @@ function brightnessIcon(val: number): string {
   return "󰃠"
 }
 
-// ── Brightness from /sys (no subprocess) ────────────────────────────────────
 function getBrightness(): number {
   const candidates = [
     "/sys/class/backlight/intel_backlight",
@@ -48,12 +45,11 @@ function getBrightness(): number {
         const max = parseInt(new TextDecoder().decode(maxBytes).trim())
         if (max > 0) return cur / max
       }
-    } catch (_) { }
+    } catch (_) {}
   }
   return 0.5
 }
 
-// ── Caps lock from /sys/class/leds (Wayland, no xset) ────────────────────────
 function getCapsLock(): boolean {
   const candidates = [
     "/sys/class/leds/input0::capslock/brightness",
@@ -67,28 +63,33 @@ function getCapsLock(): boolean {
     try {
       const [ok, data] = GLib.file_get_contents(p)
       if (ok && data) return new TextDecoder().decode(data).trim() === "1"
-    } catch (_) { }
+    } catch (_) {}
   }
   return false
 }
 
-// ── OSD modes ────────────────────────────────────────────────────────────────
 type Mode = "volume" | "brightness" | "mic" | "capslock"
 
 export default function OSD() {
   const [visible, setVisible] = createState(false)
   const [mode, setMode] = createState<Mode>("volume")
-  const [value, setValue] = createState(0) // 0–1 for bar modes
+  const [value, setValue] = createState(0)
   const [icon, setIcon] = createState("󰕾")
   const [capsOn, setCapsOn] = createState(false)
 
+  let ready = false
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 3000, () => {
+    ready = true
+    return GLib.SOURCE_REMOVE
+  })
+
   function show(m: Mode) {
+    if (!ready) return
     setMode(m)
     setVisible(true)
     scheduleHide(setVisible)
   }
 
-  // ── Volume + Mic ───────────────────────────────────────────────────────────
   const audio = Wp.get_default()?.audio
   if (audio) {
     const speaker = audio.defaultSpeaker
@@ -114,7 +115,6 @@ export default function OSD() {
     }
   }
 
-  // ── Brightness poll (200ms) ────────────────────────────────────────────────
   let lastBri = getBrightness()
   GLib.timeout_add(GLib.PRIORITY_DEFAULT, 200, () => {
     const b = getBrightness()
@@ -127,7 +127,6 @@ export default function OSD() {
     return GLib.SOURCE_CONTINUE
   })
 
-  // ── Caps Lock poll (150ms) ─────────────────────────────────────────────────
   let lastCaps = getCapsLock()
   GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
     const caps = getCapsLock()
@@ -139,7 +138,6 @@ export default function OSD() {
     return GLib.SOURCE_CONTINUE
   })
 
-  // ── Layout ────────────────────────────────────────────────────────────────
   return (
     <window
       cssClasses={["osd-window"]}
@@ -154,7 +152,6 @@ export default function OSD() {
         halign={Gtk.Align.CENTER}
         valign={Gtk.Align.CENTER}
       >
-        {/* Bar row — volume / brightness / mic */}
         <box
           cssClasses={["osd-bar-row"]}
           spacing={14}
@@ -171,7 +168,6 @@ export default function OSD() {
           />
         </box>
 
-        {/* Caps lock row */}
         <box
           cssClasses={["osd-caps-row"]}
           spacing={14}
