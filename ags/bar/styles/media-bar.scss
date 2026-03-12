@@ -1,0 +1,49 @@
+// ── Media Player ───────────────────────────────────
+.media-player {
+  padding: 0px;
+}
+
+.media-btn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 0px;
+  font-size: 15px;
+  font-family: "SF Pro Display", "SF Pro Text", "SF Pro", sans-serif;
+
+  label {
+    color: $white1;
+    transition: color 150ms ease;
+  }
+
+  &:hover {
+    background: $gray2;
+
+    label {
+      color: $white3;
+    }
+  }
+
+  &:disabled label {
+    color: $gray4;
+  }
+
+  &.media-btn-play label {
+    color: $cyan;
+  }
+
+  &.media-btn-play:hover label {
+    color: $blue1;
+  }
+}
+
+.media-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: $white1;
+}
+
+.media-artist {
+  font-size: 10px;
+  color: $gray5;
+}

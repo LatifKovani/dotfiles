@@ -6,15 +6,20 @@ export default function Workspaces() {
   const focusedWorkspace = createBinding(hypr, "focusedWorkspace")
 
   return (
-    <box cssClasses={["workspaces"]} spacing={4}>
+    <box cssClasses={["workspaces"]}>
       {[1, 2, 3, 4, 5].map((id) => (
         <button
           cssClasses={focusedWorkspace((f) =>
-            f?.id === id ? ["ws-btn", "active"] : ["ws-btn"],
+            f?.id === id ? ["ws-dot", "active"] : ["ws-dot"],
           )}
           onClicked={() => hypr.dispatch("workspace", String(id))}
-          label={String(id)}
-        />
+        >
+          <label
+            cssClasses={["ws-dot-label"]}
+            label={String(id)}
+            visible={focusedWorkspace((f) => f?.id === id)}
+          />
+        </button>
       ))}
     </box>
   )

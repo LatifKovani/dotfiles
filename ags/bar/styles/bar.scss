@@ -42,38 +42,43 @@
 
 // ── Workspaces ─────────────────────────────────────
 .workspaces {
-  padding: 0px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  padding: 4px 6px;
 }
 
-.ws-btn {
-  background: transparent;
+.ws-dot {
+  background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: 999px;
-  min-width: 20px;
+  min-width: 1px;
   min-height: 10px;
   padding: 0px 12px;
-  color: $gray5;
-  font-size: 14px;
+  margin: 0 2px;
   transition:
-    color 150ms ease,
-    background 150ms ease;
+    background 150ms ease,
+    min-width 150ms ease;
 
   &:hover {
-    color: $white1;
-    font-weight: bold;
-    background: $gray2;
+    background: rgba(255, 255, 255, 0.45);
   }
 
   &.active {
-    background: linear-gradient(135deg, $blue0, $cyan);
-    font-weight: bold;
-    border-radius: 999px;
-    animation: ws-slide-in 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-
-    label {
-      color: #1b1816;
-    }
+    background: $white3;
+    min-width: 22px;
   }
+}
+
+.ws-dot-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+.ws-dot.active .ws-dot-label {
+  color: #000000;
 }
 
 // ── RAM ────────────────────────────────────────────
