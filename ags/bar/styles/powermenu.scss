@@ -1,0 +1,97 @@
+.powermenu-window,
+window.powermenu-window {
+  background: transparent;
+  background-color: transparent;
+  decoration {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+  decoration-overlay {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+  undershoot,
+  overshoot {
+    background: transparent;
+  }
+}
+window.powermenu-window > .background,
+window.powermenu-window > windowhandle,
+window.powermenu-window > windowhandle > .background {
+  background: transparent;
+  background-color: transparent;
+}
+// ── Overlay ────────────────────────────────────────
+.powermenu-overlay {
+  background: rgba(13, 14, 15, 0.55);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  &.visible {
+    opacity: 1;
+  }
+}
+// ── Uptime ─────────────────────────────────────────
+.powermenu-uptime {
+  font-size: 0.9rem;
+  color: whitesmoke;
+  letter-spacing: 1px;
+  background: transparent;
+  border-radius: 999px;
+  padding: 8px 28px;
+  border: none;
+}
+// ── Buttons container ──────────────────────────────
+.powermenu-buttons {
+  background: transparent;
+}
+// ── Base button ────────────────────────────────────
+.powermenu-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 32px 40px;
+  min-width: 110px;
+  min-height: 110px;
+  margin: 0 12px;
+  transition: all 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.powermenu-btn:hover {
+  background: rgba(20, 22, 26, 0.82);
+  transform: scale(1.28) translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  border-radius: 22px;
+}
+.powermenu-btn:active {
+  transform: scale(1.12) translateY(-2px);
+}
+// ── All icons white by default ─────────────────────
+.powermenu-btn-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 3rem;
+  min-width: 56px;
+  color: rgba(236, 239, 244, 0.92);
+  transition: font-size 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+// ── Icon grows on hover ────────────────────────────
+.powermenu-btn:hover .powermenu-btn-icon {
+  color: #eceff4;
+  font-size: 3.8rem;
+}
+// ── Label ──────────────────────────────────────────
+.powermenu-btn-label {
+  font-size: 0.82rem;
+  color: rgba(216, 222, 233, 0.6);
+  letter-spacing: 0.5px;
+}
+.powermenu-btn:hover .powermenu-btn-label {
+  color: rgba(216, 222, 233, 0.9);
+}
+// ── Hint ───────────────────────────────────────────
+.powermenu-hint {
+  font-size: 0.72rem;
+  color: rgba(216, 222, 233, 0.18);
+  letter-spacing: 0.5px;
+}

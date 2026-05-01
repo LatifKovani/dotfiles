@@ -5,8 +5,10 @@ import OSD from "./widget/osd/OSD"
 import NotificationCenter from "./widget/nc/NotificationCenter"
 import NotificationPopups from "./widget/nc/NotificationPopups"
 import Dashboard from "./widget/dashboard/Dashboard"
+import PowerMenu from "./widget/powermenu/PowerMenu"
 import { toggleNc } from "./widget/nc/NotificationCenter"
 import { toggleDashboard } from "./widget/dashboard/Dashboard"
+import { togglePowerMenu } from "./widget/powermenu/PowerMenu"
 import GLib from "gi://GLib"
 
 app.start({
@@ -18,6 +20,7 @@ app.start({
     NotificationCenter()
     NotificationPopups()
     Dashboard()
+    PowerMenu()
 
     GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
       try {
@@ -33,6 +36,13 @@ app.start({
           }
           if (cmd === "toggleDashboard") {
             toggleDashboard()
+            GLib.file_set_contents(
+              "/tmp/ags-toggle",
+              new TextEncoder().encode(""),
+            )
+          }
+          if (cmd === "togglePowerMenu") {
+            togglePowerMenu()
             GLib.file_set_contents(
               "/tmp/ags-toggle",
               new TextEncoder().encode(""),
