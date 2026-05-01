@@ -7,6 +7,7 @@ import NotificationPopups from "./widget/nc/NotificationPopups"
 import Dashboard from "./widget/dashboard/Dashboard"
 import { toggleNc } from "./widget/nc/NotificationCenter"
 import { toggleDashboard } from "./widget/dashboard/Dashboard"
+import GLib from "gi://GLib"
 
 app.start({
   instanceName: "bar",
@@ -17,17 +18,29 @@ app.start({
     NotificationCenter()
     NotificationPopups()
     Dashboard()
-      ; (globalThis as any).toggleNc = toggleNc
-      ; (globalThis as any).toggleDashboard = toggleDashboard
-  },
-  requestHandler(argv: string[], res: (r: any) => void) {
-    if (argv[0] === "toggleNc") {
-      toggleNc()
-      res("ok")
-    }
-    if (argv[0] === "toggleDashboard") {
-      toggleDashboard()
-      res("ok")
-    }
+
+    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
+      try {
+        const [ok, data] = GLib.file_get_contents("/tmp/ags-toggle")
+        if (ok && data) {
+          const cmd = new TextDecoder().decode(data).trim()
+          if (cmd === "toggleNc") {
+            toggleNc()
+            GLib.file_set_contents(
+              "/tmp/ags-toggle",
+              new TextEncoder().encode(""),
+            )
+          }
+          if (cmd === "toggleDashboard") {
+            toggleDashboard()
+            GLib.file_set_contents(
+              "/tmp/ags-toggle",
+              new TextEncoder().encode(""),
+            )
+          }
+        }
+      } catch (_) {}
+      return GLib.SOURCE_CONTINUE
+    })
   },
 })
