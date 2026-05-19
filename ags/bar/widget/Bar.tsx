@@ -1,4 +1,5 @@
 import { Astal, Gtk } from "ags/gtk4"
+import GLib from "gi://GLib"
 import Clock from "./bar/Clock"
 import Workspaces from "./bar/Workspaces"
 import Battery from "./bar/Battery"
@@ -68,7 +69,6 @@ function ClockButton() {
 
 export default function Bar(monitor: number) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
-
   return (
     <window
       cssClasses={["bar"]}
@@ -76,6 +76,11 @@ export default function Bar(monitor: number) {
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={TOP | LEFT | RIGHT}
       visible
+      $={(self: Astal.Window) => {
+        self.connect("realize", () => {
+          print("BAR HEIGHT:", self.get_height())
+        })
+      }}
     >
       <box halign={Gtk.Align.CENTER} cssClasses={["bar-center"]} spacing={6}>
         <ClockButton />

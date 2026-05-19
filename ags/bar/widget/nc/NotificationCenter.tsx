@@ -44,16 +44,15 @@ function Divider() {
 }
 
 export default function NotificationCenter() {
-  const { TOP, RIGHT } = Astal.WindowAnchor
+  const { TOP } = Astal.WindowAnchor
 
   return (
     <window
       cssClasses={["nc-window"]}
       namespace="notification-center"
       layer={Astal.Layer.OVERLAY}
-      anchor={TOP | RIGHT}
-      marginTop={4}
-      marginRight={0}
+      anchor={TOP}
+      marginTop={0}
       visible={ncVisible}
       keymode={Astal.Keymode.ON_DEMAND}
     >
@@ -63,7 +62,7 @@ export default function NotificationCenter() {
         )}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={14}
-        widthRequest={340}
+        widthRequest={660}
       >
         <Header />
         <Divider />

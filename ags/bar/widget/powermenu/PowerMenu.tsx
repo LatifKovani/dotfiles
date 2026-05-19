@@ -84,7 +84,6 @@ const buttons = [
 export default function PowerMenu() {
   const uptime = createPoll("", 5000, "bash -c \"uptime -p | sed 's/up //'\"")
 
-  // Reference te butoni i parë për grab_focus
   let firstBtnRef: Gtk.Widget | null = null
 
   return (

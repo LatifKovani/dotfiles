@@ -13,7 +13,7 @@ export function toggleDashboard() {
 }
 
 export default function Dashboard() {
-  const { TOP, LEFT, BOTTOM } = Astal.WindowAnchor
+  const { TOP } = Astal.WindowAnchor
 
   return (
     <window
@@ -21,7 +21,7 @@ export default function Dashboard() {
       name="dashboard"
       namespace="dashboard"
       cssClasses={["dashboard-window"]}
-      anchor={TOP | LEFT | BOTTOM}
+      anchor={TOP}
       layer={Astal.Layer.OVERLAY}
       exclusivity={Astal.Exclusivity.NORMAL}
       keymode={Astal.Keymode.ON_DEMAND}
@@ -45,7 +45,7 @@ export default function Dashboard() {
         cssClasses={["dashboard"]}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={0}
-        widthRequest={280}
+        widthRequest={660}
       >
         <Calendar />
         <box cssClasses={["dash-divider"]} heightRequest={1} />
