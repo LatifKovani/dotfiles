@@ -13,128 +13,199 @@ export default function Toggles() {
   const wifi = network.wifi
 
   const [wifiOn, setWifiOn] = createState(wifi?.enabled ?? false)
+  const [ssid, setSsid] = createState(wifi?.ssid ?? "Wi-Fi")
   const [btOn, setBtOn] = createState(bt.adapter?.powered ?? false)
   const [dnd, setDnd] = createState(notifd.dont_disturb)
 
-  if (wifi) wifi.connect("notify::enabled", () => setWifiOn(wifi.enabled))
+  if (wifi) {
+    wifi.connect("notify::enabled", () => setWifiOn(wifi.enabled))
+    wifi.connect("notify::ssid", () => setSsid(wifi.ssid ?? "Wi-Fi"))
+  }
   if (bt.adapter)
     bt.adapter.connect("notify::powered", () => setBtOn(bt.adapter!.powered))
   notifd.connect("notify::dont-disturb", () => setDnd(notifd.dont_disturb))
 
   return (
-    <box cssClasses={["nc-toggles-grid"]} spacing={8}>
-      {wifi && (
-        <button
-          cssClasses={wifiOn((w: boolean) =>
-            w ? ["nc-toggle", "active"] : ["nc-toggle"],
-          )}
-          onClicked={() => {
-            const next = !wifi.enabled
-            GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
-              wifi.enabled = next
+    <box
+      cssClasses={["nc-toggles-grid"]}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={8}
+    >
+      {/* Top row: WiFi large + small toggles column */}
+      <box spacing={8} homogeneous>
+        {/* WiFi large card */}
+        {wifi && (
+          <button
+            cssClasses={wifiOn((w: boolean) =>
+              w ? ["nc-toggle-large", "active"] : ["nc-toggle-large"],
+            )}
+            onClicked={() => {
+              const next = !wifi.enabled
+              GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+                wifi.enabled = next
+                notify({
+                  appName: "Wi-Fi",
+                  summary: next ? "Wi-Fi On" : "Wi-Fi Off",
+                  body: next ? "Wireless enabled" : "Wireless disabled",
+                  urgency: 0,
+                })
+                return GLib.SOURCE_REMOVE
+              })
+            }}
+          >
+            <box
+              orientation={Gtk.Orientation.VERTICAL}
+              spacing={6}
+              halign={Gtk.Align.START}
+              valign={Gtk.Align.CENTER}
+              hexpand
+            >
+              <label
+                cssClasses={["nc-toggle-icon-large"]}
+                label={wifiOn((w: boolean) => (w ? "󰖩" : "󰖪"))}
+                halign={Gtk.Align.START}
+              />
+              <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+                <label
+                  cssClasses={["nc-toggle-title"]}
+                  label="Wi-Fi"
+                  halign={Gtk.Align.START}
+                />
+                <label
+                  cssClasses={["nc-toggle-subtitle"]}
+                  label={ssid}
+                  halign={Gtk.Align.START}
+                  ellipsize={3}
+                  maxWidthChars={14}
+                />
+              </box>
+            </box>
+          </button>
+        )}
+
+        {/* Bluetooth large card */}
+        {bt.adapter && (
+          <button
+            cssClasses={btOn((b: boolean) =>
+              b ? ["nc-toggle-large", "active"] : ["nc-toggle-large"],
+            )}
+            onClicked={() => {
+              const next = !bt.adapter!.powered
+              setBtOn(next)
+              bt.adapter!.powered = next
               notify({
-                appName: "Wi-Fi",
-                summary: next ? "Wi-Fi On" : "Wi-Fi Off",
-                body: next ? "Wireless enabled" : "Wireless disabled",
+                appName: "Bluetooth",
+                summary: next ? "Bluetooth On" : "Bluetooth Off",
+                body: next ? "Bluetooth enabled" : "Bluetooth disabled",
                 urgency: 0,
               })
-              return GLib.SOURCE_REMOVE
-            })
-          }}
-        >
-          <box
-            orientation={Gtk.Orientation.VERTICAL}
-            spacing={4}
-            halign={Gtk.Align.CENTER}
-            valign={Gtk.Align.CENTER}
+            }}
           >
-            <label
-              cssClasses={["nc-toggle-icon"]}
-              label={wifiOn((w: boolean) => (w ? "󰖩" : "󰖪"))}
-            />
-            <label cssClasses={["nc-toggle-label"]} label="Wi-Fi" />
-          </box>
-        </button>
-      )}
+            <box
+              orientation={Gtk.Orientation.VERTICAL}
+              spacing={6}
+              halign={Gtk.Align.START}
+              valign={Gtk.Align.CENTER}
+              hexpand
+            >
+              <label
+                cssClasses={["nc-toggle-icon-large"]}
+                label={btOn((b: boolean) => (b ? "󰂯" : "󰂲"))}
+                halign={Gtk.Align.START}
+              />
+              <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+                <label
+                  cssClasses={["nc-toggle-title"]}
+                  label="Bluetooth"
+                  halign={Gtk.Align.START}
+                />
+                <label
+                  cssClasses={["nc-toggle-subtitle"]}
+                  label={btOn((b: boolean) => (b ? "On" : "Off"))}
+                  halign={Gtk.Align.START}
+                />
+              </box>
+            </box>
+          </button>
+        )}
+      </box>
 
-      {bt.adapter && (
+      {/* Bottom row: Focus + Look small toggles */}
+      <box spacing={8} homogeneous>
         <button
-          cssClasses={btOn((b: boolean) =>
-            b ? ["nc-toggle", "active"] : ["nc-toggle"],
+          cssClasses={dnd((d: boolean) =>
+            d ? ["nc-toggle-large", "active"] : ["nc-toggle-large"],
           )}
           onClicked={() => {
-            const next = !bt.adapter!.powered
-            setBtOn(next)
-            bt.adapter!.powered = next
+            const next = !notifd.dont_disturb
+            notifd.dont_disturb = next
+            setDnd(next)
             notify({
-              appName: "Bluetooth",
-              summary: next ? "Bluetooth On" : "Bluetooth Off",
-              body: next ? "Bluetooth enabled" : "Bluetooth disabled",
+              appName: "Focus",
+              summary: next ? "Focus On" : "Focus Off",
+              body: next ? "Notifications silenced" : "Notifications enabled",
               urgency: 0,
             })
           }}
         >
           <box
             orientation={Gtk.Orientation.VERTICAL}
-            spacing={4}
-            halign={Gtk.Align.CENTER}
+            spacing={6}
+            halign={Gtk.Align.START}
             valign={Gtk.Align.CENTER}
+            hexpand
           >
             <label
-              cssClasses={["nc-toggle-icon"]}
-              label={btOn((b: boolean) => (b ? "󰂯" : "󰂲"))}
+              cssClasses={["nc-toggle-icon-large"]}
+              label=""
+              halign={Gtk.Align.START}
             />
-            <label cssClasses={["nc-toggle-label"]} label="Bluetooth" />
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+              <label
+                cssClasses={["nc-toggle-title"]}
+                label="Focus"
+                halign={Gtk.Align.START}
+              />
+              <label
+                cssClasses={["nc-toggle-subtitle"]}
+                label={dnd((d: boolean) => (d ? "On" : "Off"))}
+                halign={Gtk.Align.START}
+              />
+            </box>
           </box>
         </button>
-      )}
 
-      {/* DnD: active = dont_disturb is ON = notifications silenced */}
-      {/* icon 󰂛 = silenced (dnd ON), icon 󰂚 = bell (dnd OFF) */}
-      <button
-        cssClasses={dnd((d: boolean) =>
-          d ? ["nc-toggle", "active"] : ["nc-toggle"],
-        )}
-        onClicked={() => {
-          const next = !notifd.dont_disturb
-          notifd.dont_disturb = next
-          setDnd(next)
-          notify({
-            appName: "Do Not Disturb",
-            summary: next ? "Do Not Disturb On" : "Do Not Disturb Off",
-            body: next ? "Notifications silenced" : "Notifications enabled",
-            urgency: 0,
-          })
-        }}
-      >
-        <box
-          orientation={Gtk.Orientation.VERTICAL}
-          spacing={4}
-          halign={Gtk.Align.CENTER}
-          valign={Gtk.Align.CENTER}
+        <button
+          cssClasses={["nc-toggle-large"]}
+          onClicked={() => GLib.spawn_command_line_async("nwg-look")}
         >
-          <label
-            cssClasses={["nc-toggle-icon"]}
-            label={dnd((d: boolean) => (d ? "󰂛" : "󰂚"))}
-          />
-          <label cssClasses={["nc-toggle-label"]} label="DnD" />
-        </box>
-      </button>
-
-      <button
-        cssClasses={["nc-toggle"]}
-        onClicked={() => GLib.spawn_command_line_async("nwg-look")}
-      >
-        <box
-          orientation={Gtk.Orientation.VERTICAL}
-          spacing={4}
-          halign={Gtk.Align.CENTER}
-          valign={Gtk.Align.CENTER}
-        >
-          <label cssClasses={["nc-toggle-icon"]} label="󰏘" />
-          <label cssClasses={["nc-toggle-label"]} label="Look" />
-        </box>
-      </button>
+          <box
+            orientation={Gtk.Orientation.VERTICAL}
+            spacing={6}
+            halign={Gtk.Align.START}
+            valign={Gtk.Align.CENTER}
+            hexpand
+          >
+            <label
+              cssClasses={["nc-toggle-icon-large"]}
+              label="󰏘"
+              halign={Gtk.Align.START}
+            />
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+              <label
+                cssClasses={["nc-toggle-title"]}
+                label="Look"
+                halign={Gtk.Align.START}
+              />
+              <label
+                cssClasses={["nc-toggle-subtitle"]}
+                label="Appearance"
+                halign={Gtk.Align.START}
+              />
+            </box>
+          </box>
+        </button>
+      </box>
     </box>
   )
 }

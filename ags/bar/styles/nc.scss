@@ -29,7 +29,7 @@ window.nc-window > windowhandle > .background {
   background-color: transparent;
 }
 
-// ── Panel ────────────────────────────────────────
+// ── Panel ─────────────────────────────────────────
 .nc-panel {
   background: #0b0d0f;
   border-radius: 0 0 20px 20px;
@@ -43,7 +43,7 @@ window.nc-window > windowhandle > .background {
   }
 }
 
-// ── Header ─────────────────────────────────────────
+// ── Header ────────────────────────────────────────
 .nc-header {
   padding: 0 2px;
 }
@@ -65,71 +65,222 @@ window.nc-window > windowhandle > .background {
   margin: 0 2px;
 }
 
-// ── Toggles ────────────────────────────────────────
-.nc-toggles-grid {
+// ── Controls root ─────────────────────────────────
+.nc-controls {
   padding: 0 2px;
 }
 
-.nc-toggle {
-  background: rgba(46, 52, 64, 0.5);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 10px 14px;
-  min-width: 72px;
-  min-height: 64px;
-  transition: all 150ms ease;
+// ══════════════════════════════════════════════════
+// iOS-style Cards
+// ══════════════════════════════════════════════════
 
-  .nc-toggle-icon {
-    color: #eceff4;
-  }
-
-  .nc-toggle-label {
-    color: rgba(216, 222, 233, 0.7);
-  }
+// Wide card — WiFi, used with hexpand in TSX
+.nc-card {
+  background: rgba(46, 52, 64, 0.55);
+  border-radius: 36px;
+  padding: 12px 16px;
+  min-height: 28px;
+  transition: background 150ms ease;
 
   &:hover {
-    background: rgba(67, 76, 94, 0.6);
+    background: rgba(67, 76, 94, 0.7);
   }
 
   &.active {
     background: linear-gradient(
       135deg,
-      rgba(94, 129, 172, 0.6),
-      rgba(143, 188, 187, 0.4)
+      rgba(94, 129, 172, 0.72),
+      rgba(143, 188, 187, 0.52)
     );
-    border-color: rgba(143, 188, 187, 0.3);
+    border-color: rgba(143, 188, 187, 0.25);
 
-    .nc-toggle-icon {
-      color: #81a1c1;
+    .nc-card-icon {
+      color: #eceff4;
     }
 
-    .nc-toggle-label {
-      color: rgba(216, 222, 233, 0.7);
+    .nc-card-subtitle {
+      color: rgba(236, 239, 244, 0.75);
     }
   }
 }
 
-.nc-toggle-icon {
-  font-size: 1.4rem;
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+// Square card — Bluetooth, Night Mode
+.nc-sq-card {
+  background: rgba(46, 52, 64, 0.55);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 8px;
+  min-height: 82px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: rgba(67, 76, 94, 0.7);
+  }
+
+  &.active {
+    background: linear-gradient(
+      135deg,
+      rgba(94, 129, 172, 0.72),
+      rgba(143, 188, 187, 0.52)
+    );
+    border-color: rgba(143, 188, 187, 0.25);
+
+    .nc-card-icon {
+      color: #eceff4;
+    }
+
+    .nc-card-subtitle {
+      color: rgba(236, 239, 244, 0.75);
+    }
+  }
 }
 
-.nc-toggle-label {
-  font-size: 0.68rem;
-}
-
-// ── Sliders ────────────────────────────────────────
-.nc-sliders {
-  padding: 0 2px;
-}
-
-.nc-slider-row {
-  background: rgba(46, 52, 64, 0.4);
+// Wide pill card — Focus (DnD)
+.nc-wide-card {
+  background: rgba(46, 52, 64, 0.55);
   border-radius: 999px;
-  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 20px;
+  min-height: 56px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: rgba(67, 76, 94, 0.7);
+  }
+
+  &.active {
+    background: linear-gradient(
+      135deg,
+      rgba(94, 129, 172, 0.72),
+      rgba(143, 188, 187, 0.52)
+    );
+    border-color: rgba(143, 188, 187, 0.25);
+
+    .nc-card-icon {
+      color: #eceff4;
+    }
+
+    .nc-card-subtitle {
+      color: rgba(236, 239, 244, 0.75);
+    }
+  }
+}
+
+// Circle button — Calculator
+.nc-circle-btn {
+  background: rgba(46, 52, 64, 0.55);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 56px;
+  min-height: 56px;
+  padding: 0;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: rgba(67, 76, 94, 0.7);
+  }
+}
+
+// ── Card content ──────────────────────────────────
+.nc-card-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 1.55rem;
+  color: #eceff4;
+  min-width: 28px;
+}
+
+.nc-card-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #eceff4;
+}
+
+.nc-card-subtitle {
+  font-size: 0.7rem;
+  color: rgba(216, 222, 233, 0.58);
+}
+
+// ── Media Player Card ─────────────────────────────
+.nc-media-card {
+  background: rgba(46, 52, 64, 0.55);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 12px;
+}
+
+.nc-media-art {
+  background: rgba(27, 24, 22, 0.6);
+  border-radius: 10px;
+  min-width: 78px;
+  min-height: 78px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nc-media-art-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 2.4rem;
+  color: rgba(216, 222, 233, 0.22);
+  min-width: 78px;
+}
+
+.nc-media-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #eceff4;
+}
+
+.nc-media-artist {
+  font-size: 0.72rem;
+  color: rgba(216, 222, 233, 0.55);
+}
+
+.nc-media-btn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
+  font-size: 1.05rem;
+  color: #eceff4;
+  transition: all 150ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:disabled label,
+  &:disabled {
+    color: rgba(216, 222, 233, 0.22);
+    opacity: 0.5;
+  }
+}
+
+.nc-media-btn-play {
+  font-size: 1.45rem;
+  color: #8fbcbb;
+
+  &:hover {
+    color: #88c0d0;
+  }
+}
+
+// ── Sliders card wrapper ──────────────────────────
+.nc-sliders-card {
+  background: rgba(46, 52, 64, 0.4);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+}
+
+// ── Slider rows ───────────────────────────────────
+.nc-slider-row {
+  background: transparent;
+  border-radius: 999px;
+  padding: 0;
 }
 
 .nc-slider-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
   font-size: 1rem;
   color: #eceff4;
   min-width: 18px;
@@ -138,19 +289,21 @@ window.nc-window > windowhandle > .background {
 .nc-slider-value {
   font-size: 0.72rem;
   color: rgba(216, 222, 233, 0.5);
-  min-width: 32px;
+  min-width: 34px;
 }
 
-scale,
-slider {
+// ── Thick slider override ─────────────────────────
+// Applied directly to the <slider> / GtkScale widget
+scale.nc-thick-slider,
+.nc-thick-slider {
   border-radius: 999px;
-  min-height: 4px;
+  min-height: 8px;
   background: transparent;
 
   trough {
     border-radius: 999px;
-    min-height: 4px;
-    background: rgba(255, 255, 255, 0.12);
+    min-height: 8px;
+    background: rgba(255, 255, 255, 0.14);
     border: none;
   }
 
@@ -158,21 +311,21 @@ slider {
   progress {
     background: #eceff4;
     border-radius: 999px;
-    min-height: 4px;
+    min-height: 8px;
     border: none;
   }
 
   slider {
     background: #eceff4;
     border-radius: 999px;
-    min-width: 4px;
-    min-height: 4px;
+    min-width: 16px;
+    min-height: 16px;
     border: none;
-    box-shadow: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   }
 }
 
-// ── Notifications ──────────────────────────────────
+// ── Notifications ─────────────────────────────────
 .nc-notifications {
   padding: 0 2px;
 }
@@ -260,6 +413,7 @@ slider {
 }
 
 .nc-notif-empty-icon {
+  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
   font-size: 2rem;
   color: rgba(216, 222, 233, 0.2);
 }
@@ -269,7 +423,7 @@ slider {
   color: rgba(216, 222, 233, 0.3);
 }
 
-// ── Toast Window ───────────────────────────────────
+// ── Toast Window ──────────────────────────────────
 .toast-window,
 window.toast-window {
   background: transparent;
@@ -307,7 +461,7 @@ window.toast-window > windowhandle > .background {
   background-color: transparent;
 }
 
-// ── Toast Card ─────────────────────────────────────
+// ── Toast Card ────────────────────────────────────
 .toast-card {
   background: rgba(27, 24, 22, 0.75);
   border-radius: 14px;

@@ -25,7 +25,7 @@ function getBrightness(): number {
       const max = parseInt(new TextDecoder().decode(maxOut).trim())
       if (max > 0) return cur / max
     }
-  } catch (_) { }
+  } catch (_) {}
   return 0.5
 }
 
@@ -46,8 +46,25 @@ function VolumeSlider() {
   })
 
   return (
-    <box cssClasses={["nc-slider-row"]} spacing={10}>
-      <label cssClasses={["nc-slider-icon"]} label={ico} />
+    <box
+      cssClasses={["nc-slider-card"]}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={8}
+      hexpand
+    >
+      <box spacing={6}>
+        <label cssClasses={["nc-slider-icon"]} label={ico} />
+        <label
+          cssClasses={["nc-slider-card-title"]}
+          label="Sound"
+          hexpand
+          halign={Gtk.Align.START}
+        />
+        <label
+          cssClasses={["nc-slider-value"]}
+          label={vol((v: number) => `${Math.round(v * 100)}%`)}
+        />
+      </box>
       <slider
         cssClasses={["nc-slider"]}
         hexpand
@@ -60,10 +77,6 @@ function VolumeSlider() {
           setVol(self.value)
           setIco(volumeIcon(self.value, speaker.mute))
         }}
-      />
-      <label
-        cssClasses={["nc-slider-value"]}
-        label={vol((v: number) => `${Math.round(v * 100)}%`)}
       />
     </box>
   )
@@ -81,8 +94,25 @@ function BrightnessSlider() {
   })
 
   return (
-    <box cssClasses={["nc-slider-row"]} spacing={10}>
-      <label cssClasses={["nc-slider-icon"]} label={ico} />
+    <box
+      cssClasses={["nc-slider-card"]}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={8}
+      hexpand
+    >
+      <box spacing={6}>
+        <label cssClasses={["nc-slider-icon"]} label={ico} />
+        <label
+          cssClasses={["nc-slider-card-title"]}
+          label="Display"
+          hexpand
+          halign={Gtk.Align.START}
+        />
+        <label
+          cssClasses={["nc-slider-value"]}
+          label={brightness((b: number) => `${Math.round(b * 100)}%`)}
+        />
+      </box>
       <slider
         cssClasses={["nc-slider"]}
         hexpand
@@ -97,21 +127,13 @@ function BrightnessSlider() {
           GLib.spawn_command_line_async(`brightnessctl set ${pct}%`)
         }}
       />
-      <label
-        cssClasses={["nc-slider-value"]}
-        label={brightness((b: number) => `${Math.round(b * 100)}%`)}
-      />
     </box>
   )
 }
 
 export default function Sliders() {
   return (
-    <box
-      cssClasses={["nc-sliders"]}
-      orientation={Gtk.Orientation.VERTICAL}
-      spacing={12}
-    >
+    <box cssClasses={["nc-sliders"]} spacing={8} homogeneous>
       <VolumeSlider />
       <BrightnessSlider />
     </box>

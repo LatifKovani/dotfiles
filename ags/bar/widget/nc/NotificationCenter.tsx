@@ -1,8 +1,7 @@
-import { Astal, Gtk } from "ags/gtk4"
+import { Astal, Gtk, Gdk } from "ags/gtk4"
 import { createState } from "ags"
 import { createPoll } from "ags/time"
-import Toggles from "./Toggles"
-import Sliders from "./Sliders"
+import Controls from "./Controls"
 import Notifications from "./Notifications"
 
 export const [ncVisible, setNcVisible] = createState(false)
@@ -55,6 +54,21 @@ export default function NotificationCenter() {
       marginTop={0}
       visible={ncVisible}
       keymode={Astal.Keymode.ON_DEMAND}
+      $={(self: Astal.Window) => {
+        const controller = new Gtk.EventControllerKey()
+        controller.connect(
+          "key-pressed",
+          (_ctrl: Gtk.EventControllerKey, keyval: number) => {
+            if (keyval === Gdk.KEY_Escape) {
+              _ncVisible = false
+              setNcVisible(false)
+              return true
+            }
+            return false
+          },
+        )
+        self.add_controller(controller)
+      }}
     >
       <box
         cssClasses={ncVisible((v: boolean) =>
@@ -66,9 +80,7 @@ export default function NotificationCenter() {
       >
         <Header />
         <Divider />
-        <Toggles />
-        <Divider />
-        <Sliders />
+        <Controls />
         <Divider />
         <Notifications />
       </box>
