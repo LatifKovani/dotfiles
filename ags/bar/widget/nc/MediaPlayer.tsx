@@ -141,7 +141,7 @@ export default function MediaPlayerCard() {
       {/* Controls */}
       <box
         halign={Gtk.Align.CENTER}
-        spacing={20}
+        spacing={10}
         valign={Gtk.Align.END}
         vexpand
       >

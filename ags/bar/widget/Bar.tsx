@@ -3,10 +3,10 @@ import GLib from "gi://GLib"
 import Clock from "./bar/Clock"
 import Workspaces from "./bar/Workspaces"
 import Battery from "./bar/Battery"
-import Wifi from "./bar/Wireless"
+// import Wifi from "./bar/Wireless"
 import Ram from "./bar/Ram"
 import Cpu from "./bar/Cpu"
-import Bluetooth from "./bar/Bluetooth"
+// import Bluetooth from "./bar/Bluetooth"
 import { toggleNc, ncVisible } from "./nc/NotificationCenter"
 import { toggleDashboard, dashboardOpen } from "./dashboard/Dashboard"
 import { createState } from "ags"
@@ -90,10 +90,10 @@ export default function Bar(monitor: number) {
         <Cpu />
         <Ram />
         <Sep />
-        <Bluetooth />
-        <Wifi />
+        {/* <Bluetooth /> */}
+        {/* <Wifi /> */}
         <Battery />
-        <Sep />
+        {/* <Sep /> */}
         <NcButton />
       </box>
     </window>

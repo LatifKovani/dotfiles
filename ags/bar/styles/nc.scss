@@ -1,309 +1,156 @@
-// ── NC Window ──────────────────────────────────────
-.nc-window,
-window.nc-window {
-  background: transparent;
-  background-color: transparent;
+// ══════════════════════════════════════════════════════════════════
+// nc-cards-patch.scss
+// @import "nc-cards-patch"; at the bottom of nc.scss
+// ══════════════════════════════════════════════════════════════════
 
-  decoration {
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  decoration-overlay {
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  undershoot,
-  overshoot {
-    background: transparent;
-  }
-}
-
-window.nc-window > .background,
-window.nc-window > windowhandle,
-window.nc-window > windowhandle > .background {
-  background: transparent;
-  background-color: transparent;
-}
-
-// ── Panel ─────────────────────────────────────────
+// ── NC panel — narrower, solid background ─────────────────────────
 .nc-panel {
   background: #0b0d0f;
   border-radius: 0 0 20px 20px;
   padding: 16px;
-  opacity: 0;
-  margin-top: 0px;
-
-  &.visible {
-    opacity: 1;
-    margin-top: 0px;
-  }
+  min-width: 0;
+  max-width: 480px;
 }
 
-// ── Header ────────────────────────────────────────
-.nc-header {
-  padding: 0 2px;
-}
-
-.nc-header-time {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #eceff4;
-  letter-spacing: -1px;
-}
-
-.nc-header-date {
-  font-size: 0.85rem;
-  color: rgba(216, 222, 233, 0.55);
-}
-
-.nc-divider {
-  background: rgba(255, 255, 255, 0.06);
-  margin: 0 2px;
-}
-
-// ── Controls root ─────────────────────────────────
-.nc-controls {
-  padding: 0 2px;
-}
-
-// ══════════════════════════════════════════════════
-// iOS-style Cards
-// ══════════════════════════════════════════════════
-
-// Wide card — WiFi, used with hexpand in TSX
-.nc-card {
-  background: rgba(46, 52, 64, 0.55);
-  border-radius: 36px;
-  padding: 12px 16px;
-  min-height: 28px;
-  transition: background 150ms ease;
-
-  &:hover {
-    background: rgba(67, 76, 94, 0.7);
-  }
-
-  &.active {
-    background: linear-gradient(
-      135deg,
-      rgba(94, 129, 172, 0.72),
-      rgba(143, 188, 187, 0.52)
-    );
-    border-color: rgba(143, 188, 187, 0.25);
-
-    .nc-card-icon {
-      color: #eceff4;
-    }
-
-    .nc-card-subtitle {
-      color: rgba(236, 239, 244, 0.75);
-    }
-  }
-}
-
-// Square card — Bluetooth, Night Mode
-.nc-sq-card {
-  background: rgba(46, 52, 64, 0.55);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 10px 8px;
-  min-height: 82px;
-  transition: background 150ms ease;
-
-  &:hover {
-    background: rgba(67, 76, 94, 0.7);
-  }
-
-  &.active {
-    background: linear-gradient(
-      135deg,
-      rgba(94, 129, 172, 0.72),
-      rgba(143, 188, 187, 0.52)
-    );
-    border-color: rgba(143, 188, 187, 0.25);
-
-    .nc-card-icon {
-      color: #eceff4;
-    }
-
-    .nc-card-subtitle {
-      color: rgba(236, 239, 244, 0.75);
-    }
-  }
-}
-
-// Wide pill card — Focus (DnD)
-.nc-wide-card {
-  background: rgba(46, 52, 64, 0.55);
+// ── Wide pill — WiFi, Bluetooth, Focus, Night ─────────────────────
+// Card color is clearly lifted above #0b0d0f so they read as cards
+.cc-wide-pill {
+  background: #161b22;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 10px 20px;
-  min-height: 56px;
-  transition: background 150ms ease;
+  border: none;
+  padding: 10px 18px;
+  min-height: 60px;
+  transition: background 120ms ease;
 
   &:hover {
-    background: rgba(67, 76, 94, 0.7);
+    background: #1e2530;
   }
 
   &.active {
-    background: linear-gradient(
-      135deg,
-      rgba(94, 129, 172, 0.72),
-      rgba(143, 188, 187, 0.52)
-    );
-    border-color: rgba(143, 188, 187, 0.25);
+    background: #1c2d3f;
 
-    .nc-card-icon {
+    .cc-pill-icon {
+      color: #88c0d0;
+    }
+    .cc-pill-title {
       color: #eceff4;
     }
-
-    .nc-card-subtitle {
-      color: rgba(236, 239, 244, 0.75);
+    .cc-pill-sub {
+      color: #81a1c1;
     }
   }
 }
 
-// Circle button — Calculator
-.nc-circle-btn {
-  background: rgba(46, 52, 64, 0.55);
+.cc-focus-pill {
+  background: #161b22;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  min-width: 56px;
-  min-height: 56px;
+  border: none;
+  padding: 10px 18px;
+  min-height: 60px;
+  margin-left: 15px;
+  transition: background 120ms ease;
+
+  &:hover {
+    background: #1e2530;
+  }
+
+  &.active {
+    background: #1c2d3f;
+
+    .cc-pill-icon {
+      color: #88c0d0;
+    }
+    .cc-pill-title {
+      color: #eceff4;
+    }
+    .cc-pill-sub {
+      color: #81a1c1;
+    }
+  }
+}
+
+// ── Circle — Calculator ───────────────────────────────────────────
+.cc-circle {
+  background: #161b22;
+  border-radius: 999px;
+  border: none;
+  min-width: 60px;
+  min-height: 60px;
   padding: 0;
-  transition: background 150ms ease;
+  transition: background 120ms ease;
 
   &:hover {
-    background: rgba(67, 76, 94, 0.7);
+    background: #1e2530;
   }
 }
 
-// ── Card content ──────────────────────────────────
-.nc-card-icon {
+// ── Pill text ─────────────────────────────────────────────────────
+.cc-pill-icon {
   font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 1.55rem;
+  font-size: 1.3rem;
   color: #eceff4;
-  min-width: 28px;
+  min-width: 24px;
 }
 
-.nc-card-title {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: #eceff4;
-}
-
-.nc-card-subtitle {
-  font-size: 0.7rem;
-  color: rgba(216, 222, 233, 0.58);
-}
-
-// ── Media Player Card ─────────────────────────────
-.nc-media-card {
-  background: rgba(46, 52, 64, 0.55);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 14px 12px;
-}
-
-.nc-media-art {
-  background: rgba(27, 24, 22, 0.6);
-  border-radius: 10px;
-  min-width: 78px;
-  min-height: 78px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.nc-media-art-icon {
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 2.4rem;
-  color: rgba(216, 222, 233, 0.22);
-  min-width: 78px;
-}
-
-.nc-media-title {
+.cc-pill-title {
   font-size: 0.82rem;
   font-weight: 600;
   color: #eceff4;
 }
 
-.nc-media-artist {
-  font-size: 0.72rem;
-  color: rgba(216, 222, 233, 0.55);
+.cc-pill-sub {
+  font-size: 0.68rem;
+  color: #4c566a;
 }
 
-.nc-media-btn {
-  background: transparent;
+// ── Media card ────────────────────────────────────────────────────
+.nc-media-card {
+  background: #161b22;
+  border-radius: 20px;
   border: none;
-  border-radius: 999px;
-  padding: 4px 8px;
+  padding: 14px 12px;
+  min-width: 200px;
+  margin-left: 20px;
+}
+
+// ── Slider cards — each separated ────────────────────────────────
+.cc-slider-card {
+  background: #161b22;
+  border-radius: 20px;
+  border: none;
+  padding: 12px 18px;
+}
+
+.cc-slider-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #d8dee9;
+  margin-bottom: 1px;
+}
+
+.cc-slider-icon {
   font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 1.05rem;
-  color: #eceff4;
-  transition: all 150ms ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  &:disabled label,
-  &:disabled {
-    color: rgba(216, 222, 233, 0.22);
-    opacity: 0.5;
-  }
+  font-size: 0.95rem;
+  color: #d8dee9;
+  min-width: 16px;
 }
 
-.nc-media-btn-play {
-  font-size: 1.45rem;
-  color: #8fbcbb;
-
-  &:hover {
-    color: #88c0d0;
-  }
+.cc-slider-value {
+  font-size: 0.7rem;
+  color: #4c566a;
+  min-width: 32px;
 }
 
-// ── Sliders card wrapper ──────────────────────────
-.nc-sliders-card {
-  background: rgba(46, 52, 64, 0.4);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  padding: 12px 14px;
-}
-
-// ── Slider rows ───────────────────────────────────
-.nc-slider-row {
-  background: transparent;
+// ── Slider track ──────────────────────────────────────────────────
+scale.cc-slider,
+.cc-slider {
   border-radius: 999px;
-  padding: 0;
-}
-
-.nc-slider-icon {
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 1rem;
-  color: #eceff4;
-  min-width: 18px;
-}
-
-.nc-slider-value {
-  font-size: 0.72rem;
-  color: rgba(216, 222, 233, 0.5);
-  min-width: 34px;
-}
-
-// ── Thick slider override ─────────────────────────
-// Applied directly to the <slider> / GtkScale widget
-scale.nc-thick-slider,
-.nc-thick-slider {
-  border-radius: 999px;
-  min-height: 8px;
   background: transparent;
 
   trough {
     border-radius: 999px;
-    min-height: 8px;
-    background: rgba(255, 255, 255, 0.14);
+    min-height: 5px;
+    background: #2e3440;
     border: none;
   }
 
@@ -311,159 +158,28 @@ scale.nc-thick-slider,
   progress {
     background: #eceff4;
     border-radius: 999px;
-    min-height: 8px;
+    min-height: 5px;
     border: none;
   }
 
   slider {
     background: #eceff4;
-    border-radius: 999px;
-    min-width: 16px;
-    min-height: 16px;
+    border-radius: 8px;
+    min-width: 28px;
+    min-height: 15px;
     border: none;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   }
 }
 
-// ── Notifications ─────────────────────────────────
-.nc-notifications {
-  padding: 0 2px;
-}
-
-.nc-notif-header {
-  padding: 0;
-}
-
-.nc-notif-title {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: rgba(216, 222, 233, 0.5);
-  letter-spacing: 0.5px;
-}
-
-.nc-notif-clear-btn {
+// ── NC full-screen overlay (click-outside-to-close) ───────────────
+.nc-overlay {
   background: transparent;
-  border: none;
-  border-radius: 999px;
-  padding: 2px 10px;
-  font-size: 0.75rem;
-  color: #5e81ac;
-
-  &:hover {
-    background: rgba(94, 129, 172, 0.15);
-  }
 }
 
-.nc-notif-scroll {
-  border-radius: 12px;
-}
-
-.nc-notif {
-  background: rgba(46, 52, 64, 0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(94, 129, 172, 0.1);
-  padding: 10px;
-}
-
-.nc-notif-icon-fallback {
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 1.4rem;
-  color: rgba(216, 222, 233, 0.4);
-  min-width: 32px;
-}
-
-.nc-notif-app {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #8fbcbb;
-}
-
-.nc-notif-time {
-  font-size: 0.7rem;
-  color: rgba(216, 222, 233, 0.35);
-}
-
-.nc-notif-summary {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #eceff4;
-}
-
-.nc-notif-body {
-  font-size: 0.78rem;
-  color: rgba(216, 222, 233, 0.7);
-}
-
-.nc-notif-close {
-  background: transparent;
-  border: none;
-  border-radius: 999px;
-  padding: 2px 6px;
-  font-size: 0.75rem;
-  color: rgba(216, 222, 233, 0.3);
-
-  &:hover {
-    background: rgba(191, 97, 106, 0.2);
-    color: #bf616a;
-  }
-}
-
-.nc-notif-empty {
-  padding: 20px 0;
-}
-
-.nc-notif-empty-icon {
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 2rem;
-  color: rgba(216, 222, 233, 0.2);
-}
-
-.nc-notif-empty-label {
-  font-size: 0.82rem;
-  color: rgba(216, 222, 233, 0.3);
-}
-
-// ── Toast Window ──────────────────────────────────
-.toast-window,
-window.toast-window {
-  background: transparent;
-  background-color: transparent;
-
-  decoration {
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  decoration-overlay {
-    box-shadow: none;
-    border: none;
-    background: transparent;
-  }
-
-  undershoot,
-  overshoot {
-    background: transparent;
-  }
-}
-
-window.toast-window > .background,
-window.toast-window > windowhandle,
-window.toast-window > windowhandle > .background {
-  background: transparent;
-  background-color: transparent;
-}
-
-.toast-window > *,
-.toast-window > * > *,
-.toast-list {
-  background: transparent;
-  background-color: transparent;
-}
-
-// ── Toast Card ────────────────────────────────────
+// ── Toast card — explicit solid bg to override global * transparent ─
 .toast-card {
-  background: rgba(27, 24, 22, 0.75);
+  background: #161b22;
   border-radius: 14px;
   border: 1px solid rgba(94, 129, 172, 0.22);
   box-shadow:
@@ -471,28 +187,4 @@ window.toast-window > windowhandle > .background {
     inset 0 1px 0 rgba(136, 192, 208, 0.07);
   padding: 12px 14px;
   min-width: 300px;
-}
-
-.toast-icon {
-  font-family: "JetBrains Mono Nerd Font", "Symbols Nerd Font", monospace;
-  font-size: 1.5rem;
-  color: #8fbcbb;
-  min-width: 28px;
-}
-
-.toast-app {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #8fbcbb;
-}
-
-.toast-summary {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #eceff4;
-}
-
-.toast-body {
-  font-size: 0.78rem;
-  color: rgba(216, 222, 233, 0.7);
 }

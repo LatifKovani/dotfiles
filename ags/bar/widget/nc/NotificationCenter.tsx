@@ -43,20 +43,21 @@ function Divider() {
 }
 
 export default function NotificationCenter() {
-  const { TOP } = Astal.WindowAnchor
+  const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 
   return (
     <window
       cssClasses={["nc-window"]}
       namespace="notification-center"
       layer={Astal.Layer.OVERLAY}
-      anchor={TOP}
-      marginTop={0}
+      anchor={TOP | BOTTOM | LEFT | RIGHT}
+      exclusivity={Astal.Exclusivity.IGNORE}
       visible={ncVisible}
       keymode={Astal.Keymode.ON_DEMAND}
       $={(self: Astal.Window) => {
-        const controller = new Gtk.EventControllerKey()
-        controller.connect(
+        // Escape to close
+        const keyCtrl = new Gtk.EventControllerKey()
+        keyCtrl.connect(
           "key-pressed",
           (_ctrl: Gtk.EventControllerKey, keyval: number) => {
             if (keyval === Gdk.KEY_Escape) {
@@ -67,22 +68,55 @@ export default function NotificationCenter() {
             return false
           },
         )
-        self.add_controller(controller)
+        self.add_controller(keyCtrl)
       }}
     >
+      {/* Full-screen overlay — clicking the empty area closes NC */}
       <box
-        cssClasses={ncVisible((v: boolean) =>
-          v ? ["nc-panel", "visible"] : ["nc-panel"],
-        )}
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={14}
-        widthRequest={660}
+        hexpand
+        vexpand
+        halign={Gtk.Align.FILL}
+        valign={Gtk.Align.FILL}
+        cssClasses={["nc-overlay"]}
+        $={(self: Gtk.Box) => {
+          const click = new Gtk.GestureClick()
+          click.connect("released", () => {
+            _ncVisible = false
+            setNcVisible(false)
+          })
+          self.add_controller(click)
+        }}
       >
-        <Header />
-        <Divider />
-        <Controls />
-        <Divider />
-        <Notifications />
+        {/* Panel pinned to top-right, stops click propagation */}
+        <box
+          halign={Gtk.Align.END}
+          valign={Gtk.Align.START}
+          marginTop={31}
+          marginEnd={677}
+          $={(self: Gtk.Box) => {
+            // Prevent clicks on the panel from reaching the overlay
+            const click = new Gtk.GestureClick()
+            click.connect("released", (_g: Gtk.GestureClick, _n: number) => {
+              // do nothing — swallow the click
+            })
+            self.add_controller(click)
+          }}
+        >
+          <box
+            cssClasses={ncVisible((v: boolean) =>
+              v ? ["nc-panel", "visible"] : ["nc-panel"],
+            )}
+            orientation={Gtk.Orientation.VERTICAL}
+            spacing={14}
+            widthRequest={566}
+          >
+            <Header />
+            <Divider />
+            <Controls />
+            <Divider />
+            <Notifications />
+          </box>
+        </box>
       </box>
     </window>
   )

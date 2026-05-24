@@ -19,25 +19,25 @@ function isWlsunsetRunning(): boolean {
   return false
 }
 
-// ─── WiFi Card ───────────────────────────────────────────────────────────────
+// ─── WiFi Wide Pill ───────────────────────────────────────────────────────────
 function WifiCard() {
   const network = Network.get_default()
   const wifi = network.wifi
 
   if (!wifi) {
     return (
-      <button cssClasses={["nc-card"]} hexpand>
+      <button cssClasses={["cc-wide-pill"]} hexpand>
         <box spacing={12} valign={Gtk.Align.CENTER}>
-          <label cssClasses={["nc-card-icon"]} label="󰖪" />
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={1} hexpand>
+          <label cssClasses={["cc-pill-icon"]} label="󰖪" />
+          <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
             <label
-              cssClasses={["nc-card-title"]}
+              cssClasses={["cc-pill-title"]}
               label="Wi-Fi"
               halign={Gtk.Align.START}
             />
             <label
-              cssClasses={["nc-card-subtitle"]}
-              label="Unavailable"
+              cssClasses={["cc-pill-sub"]}
+              label="Off"
               halign={Gtk.Align.START}
             />
           </box>
@@ -62,8 +62,9 @@ function WifiCard() {
   return (
     <button
       cssClasses={enabled((e: boolean) =>
-        e ? ["nc-card", "active"] : ["nc-card"],
+        e ? ["cc-wide-pill", "active"] : ["cc-wide-pill"],
       )}
+      hexpand
       onClicked={() => {
         const next = !wifi.enabled
         GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
@@ -74,17 +75,17 @@ function WifiCard() {
     >
       <box spacing={12} valign={Gtk.Align.CENTER}>
         <label
-          cssClasses={["nc-card-icon"]}
+          cssClasses={["cc-pill-icon"]}
           label={enabled((e: boolean) => (e ? "󰖩" : "󰖪"))}
         />
         <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
           <label
-            cssClasses={["nc-card-title"]}
+            cssClasses={["cc-pill-title"]}
             label="Wi-Fi"
             halign={Gtk.Align.START}
           />
           <label
-            cssClasses={["nc-card-subtitle"]}
+            cssClasses={["cc-pill-sub"]}
             label={ssid}
             halign={Gtk.Align.START}
             maxWidthChars={18}
@@ -96,7 +97,7 @@ function WifiCard() {
   )
 }
 
-// ─── Bluetooth Card ──────────────────────────────────────────────────────────
+// ─── Bluetooth Wide Pill ─────────────────────────────────────────────────────
 function BtCard() {
   const bt = Bluetooth.get_default()
 
@@ -109,16 +110,21 @@ function BtCard() {
 
   if (!bt.adapter) {
     return (
-      <button cssClasses={["nc-sq-card"]} hexpand>
-        <box
-          orientation={Gtk.Orientation.VERTICAL}
-          spacing={4}
-          halign={Gtk.Align.CENTER}
-          valign={Gtk.Align.CENTER}
-        >
-          <label cssClasses={["nc-card-icon"]} label="󰂲" />
-          <label cssClasses={["nc-card-title"]} label="Bluetooth" />
-          <label cssClasses={["nc-card-subtitle"]} label="Off" />
+      <button cssClasses={["cc-wide-pill"]} hexpand>
+        <box spacing={12} valign={Gtk.Align.CENTER}>
+          <label cssClasses={["cc-pill-icon"]} label="󰂲" />
+          <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+            <label
+              cssClasses={["cc-pill-title"]}
+              label="Bluetooth"
+              halign={Gtk.Align.START}
+            />
+            <label
+              cssClasses={["cc-pill-sub"]}
+              label="Off"
+              halign={Gtk.Align.START}
+            />
+          </box>
         </box>
       </button>
     )
@@ -133,13 +139,11 @@ function BtCard() {
   }
 
   bt.adapter.connect("notify::powered", update)
-
   for (const d of bt.devices) {
     try {
       d.connect("notify::connected", update)
     } catch (_) {}
   }
-
   bt.connect("device-added", (_: any, device: any) => {
     try {
       device.connect("notify::connected", update)
@@ -150,7 +154,7 @@ function BtCard() {
   return (
     <button
       cssClasses={powered((p: boolean) =>
-        p ? ["nc-sq-card", "active"] : ["nc-sq-card"],
+        p ? ["cc-wide-pill", "active"] : ["cc-wide-pill"],
       )}
       hexpand
       onClicked={() => {
@@ -159,87 +163,31 @@ function BtCard() {
         update()
       }}
     >
-      <box
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={4}
-        halign={Gtk.Align.CENTER}
-        valign={Gtk.Align.CENTER}
-      >
+      <box spacing={12} valign={Gtk.Align.CENTER}>
         <label
-          cssClasses={["nc-card-icon"]}
+          cssClasses={["cc-pill-icon"]}
           label={powered((p: boolean) => (p ? "󰂯" : "󰂲"))}
         />
-        <label cssClasses={["nc-card-title"]} label="Bluetooth" />
-        <label
-          cssClasses={["nc-card-subtitle"]}
-          label={subtitle}
-          maxWidthChars={13}
-          halign={Gtk.Align.CENTER}
-          $={(self: Gtk.Label) => self.set_ellipsize(3)}
-        />
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+          <label
+            cssClasses={["cc-pill-title"]}
+            label="Bluetooth"
+            halign={Gtk.Align.START}
+          />
+          <label
+            cssClasses={["cc-pill-sub"]}
+            label={subtitle}
+            halign={Gtk.Align.START}
+            maxWidthChars={18}
+            $={(self: Gtk.Label) => self.set_ellipsize(3)}
+          />
+        </box>
       </box>
     </button>
   )
 }
 
-// ─── Night Mode Card (wlsunset) ──────────────────────────────────────────────
-function NightModeCard() {
-  const [on, setOn] = createState(isWlsunsetRunning())
-
-  // Poll to keep state in sync
-  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 4000, () => {
-    setOn(isWlsunsetRunning())
-    return GLib.SOURCE_CONTINUE
-  })
-
-  return (
-    <button
-      cssClasses={on((o: boolean) =>
-        o ? ["nc-sq-card", "active"] : ["nc-sq-card"],
-      )}
-      hexpand
-      onClicked={() => {
-        const isOn = isWlsunsetRunning()
-        if (isOn) {
-          GLib.spawn_command_line_async("pkill wlsunset")
-          setOn(false)
-          notify({
-            appName: "Night Mode",
-            summary: "Night Mode Off",
-            body: "Color temperature restored",
-            urgency: 0,
-          })
-        } else {
-          // -t 3200 -T 3200 forces warm tone at all times
-          GLib.spawn_command_line_async("wlsunset -t 3200 -T 3200")
-          setOn(true)
-          notify({
-            appName: "Night Mode",
-            summary: "Night Mode On",
-            body: "Warm color temperature applied",
-            urgency: 0,
-          })
-        }
-      }}
-    >
-      <box
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={4}
-        halign={Gtk.Align.CENTER}
-        valign={Gtk.Align.CENTER}
-      >
-        <label cssClasses={["nc-card-icon"]} label="󰖔" />
-        <label cssClasses={["nc-card-title"]} label="Night" />
-        <label
-          cssClasses={["nc-card-subtitle"]}
-          label={on((o: boolean) => (o ? "On" : "Off"))}
-        />
-      </box>
-    </button>
-  )
-}
-
-// ─── Focus Card (DnD, renamed) ───────────────────────────────────────────────
+// ─── Focus Wide Pill ──────────────────────────────────────────────────────────
 function FocusCard() {
   const notifd = Notifd.get_default()
   const [dnd, setDnd] = createState(notifd.dont_disturb)
@@ -249,7 +197,7 @@ function FocusCard() {
   return (
     <button
       cssClasses={dnd((d: boolean) =>
-        d ? ["nc-wide-card", "active"] : ["nc-wide-card"],
+        d ? ["cc-wide-pill", "active"] : ["cc-wide-pill"],
       )}
       hexpand
       onClicked={() => {
@@ -264,16 +212,16 @@ function FocusCard() {
         })
       }}
     >
-      <box spacing={14} valign={Gtk.Align.CENTER} halign={Gtk.Align.START}>
-        <label cssClasses={["nc-card-icon"]} label="󰖔" />
+      <box spacing={12} valign={Gtk.Align.CENTER}>
+        <label cssClasses={["cc-pill-icon"]} label="󰖔" />
         <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
           <label
-            cssClasses={["nc-card-title"]}
+            cssClasses={["cc-pill-title"]}
             label="Focus"
             halign={Gtk.Align.START}
           />
           <label
-            cssClasses={["nc-card-subtitle"]}
+            cssClasses={["cc-pill-sub"]}
             label={dnd((d: boolean) => (d ? "On" : "Off"))}
             halign={Gtk.Align.START}
           />
@@ -283,15 +231,72 @@ function FocusCard() {
   )
 }
 
-// ─── Calculator Button ────────────────────────────────────────────────────────
+// ─── Night Mode Pill ──────────────────────────────────────────────────────────
+function NightModeCard() {
+  const [on, setOn] = createState(isWlsunsetRunning())
+
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 4000, () => {
+    setOn(isWlsunsetRunning())
+    return GLib.SOURCE_CONTINUE
+  })
+
+  return (
+    <button
+      cssClasses={on((o: boolean) =>
+        o ? ["cc-focus-pill", "active"] : ["cc-focus-pill"],
+      )}
+      widthRequest={175}
+      onClicked={() => {
+        const isOn = isWlsunsetRunning()
+        if (isOn) {
+          GLib.spawn_command_line_async("pkill wlsunset")
+          setOn(false)
+          notify({
+            appName: "Night Mode",
+            summary: "Night Mode Off",
+            body: "Color temperature restored",
+            urgency: 0,
+          })
+        } else {
+          GLib.spawn_command_line_async("wlsunset -t 3200 -T 3200")
+          setOn(true)
+          notify({
+            appName: "Night Mode",
+            summary: "Night Mode On",
+            body: "Warm color temperature applied",
+            urgency: 0,
+          })
+        }
+      }}
+    >
+      <box spacing={12} valign={Gtk.Align.CENTER}>
+        <label cssClasses={["cc-pill-icon"]} label="󰖔" />
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={1}>
+          <label
+            cssClasses={["cc-pill-title"]}
+            label="Night"
+            halign={Gtk.Align.START}
+          />
+          <label
+            cssClasses={["cc-pill-sub"]}
+            label={on((o: boolean) => (o ? "On" : "Off"))}
+            halign={Gtk.Align.START}
+          />
+        </box>
+      </box>
+    </button>
+  )
+}
+
+// ─── Calculator Circle ────────────────────────────────────────────────────────
 function CalcButton() {
   return (
     <button
-      cssClasses={["nc-circle-btn"]}
+      cssClasses={["cc-circle"]}
       onClicked={() => GLib.spawn_command_line_async("gnome-calculator")}
     >
       <label
-        cssClasses={["nc-card-icon"]}
+        cssClasses={["cc-pill-icon"]}
         label="󰃬"
         halign={Gtk.Align.CENTER}
         valign={Gtk.Align.CENTER}
@@ -300,38 +305,86 @@ function CalcButton() {
   )
 }
 
-// ─── Sliders ──────────────────────────────────────────────────────────────────
-function volumeIcon(vol: number, muted: boolean): string {
-  if (muted || vol === 0) return "󰝟"
-  if (vol < 0.33) return "󰕿"
-  if (vol < 0.66) return "󰖀"
-  return "󰕾"
+// ─── Brightness Slider (own card) ────────────────────────────────────────────
+function BrightnessSlider() {
+  function getBrightness(): number {
+    try {
+      const [ok, curOut] = GLib.spawn_command_line_sync("brightnessctl get")
+      const [ok2, maxOut] = GLib.spawn_command_line_sync("brightnessctl max")
+      if (ok && ok2 && curOut && maxOut) {
+        const cur = parseInt(
+          new TextDecoder().decode(curOut as Uint8Array).trim(),
+        )
+        const max = parseInt(
+          new TextDecoder().decode(maxOut as Uint8Array).trim(),
+        )
+        if (max > 0) return cur / max
+      }
+    } catch (_) {}
+    return 0.5
+  }
+
+  function brightnessIcon(val: number): string {
+    if (val < 0.33) return "󰃞"
+    if (val < 0.66) return "󰃟"
+    return "󰃠"
+  }
+
+  const [brightness, setBrightness] = createState(getBrightness())
+  const [ico, setIco] = createState(brightnessIcon(getBrightness()))
+
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
+    const b = getBrightness()
+    setBrightness(b)
+    setIco(brightnessIcon(b))
+    return GLib.SOURCE_CONTINUE
+  })
+
+  return (
+    <box
+      cssClasses={["cc-slider-card"]}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={6}
+    >
+      <label
+        cssClasses={["cc-slider-label"]}
+        label="Display"
+        halign={Gtk.Align.START}
+      />
+      <box spacing={10}>
+        <label cssClasses={["cc-slider-icon"]} label={ico} />
+        <slider
+          cssClasses={["cc-slider"]}
+          hexpand
+          min={0}
+          max={1}
+          value={brightness}
+          valign={Gtk.Align.CENTER}
+          onChangeValue={(self: any) => {
+            const pct = Math.round(self.value * 100)
+            setBrightness(self.value)
+            setIco(brightnessIcon(self.value))
+            GLib.spawn_command_line_async(`brightnessctl set ${pct}%`)
+          }}
+        />
+        <label
+          cssClasses={["cc-slider-value"]}
+          label={brightness((b: number) => `${Math.round(b * 100)}%`)}
+        />
+      </box>
+    </box>
+  )
 }
 
-function brightnessIcon(val: number): string {
-  if (val < 0.33) return "󰃞"
-  if (val < 0.66) return "󰃟"
-  return "󰃠"
-}
-
-function getBrightness(): number {
-  try {
-    const [ok, curOut] = GLib.spawn_command_line_sync("brightnessctl get")
-    const [ok2, maxOut] = GLib.spawn_command_line_sync("brightnessctl max")
-    if (ok && ok2 && curOut && maxOut) {
-      const cur = parseInt(
-        new TextDecoder().decode(curOut as Uint8Array).trim(),
-      )
-      const max = parseInt(
-        new TextDecoder().decode(maxOut as Uint8Array).trim(),
-      )
-      if (max > 0) return cur / max
-    }
-  } catch (_) {}
-  return 0.5
-}
-
+// ─── Volume Slider (own card) ─────────────────────────────────────────────────
 function VolumeSlider() {
+  function volumeIcon(vol: number, muted: boolean): string {
+    if (muted || vol === 0) return "󰝟"
+    if (vol < 0.33) return "󰕿"
+    if (vol < 0.66) return "󰖀"
+    return "󰕾"
+  }
+
   const audio = Wp.get_default()?.audio
   const speaker = audio?.defaultSpeaker
   if (!speaker) return <box />
@@ -348,61 +401,36 @@ function VolumeSlider() {
   })
 
   return (
-    <box cssClasses={["nc-slider-row"]} spacing={12}>
-      <label cssClasses={["nc-slider-icon"]} label={ico} />
-      <slider
-        cssClasses={["nc-thick-slider"]}
-        hexpand
-        min={0}
-        max={1}
-        value={vol}
-        valign={Gtk.Align.CENTER}
-        onChangeValue={(self: any) => {
-          speaker.volume = self.value
-          setVol(self.value)
-          setIco(volumeIcon(self.value, speaker.mute))
-        }}
-      />
+    <box
+      cssClasses={["cc-slider-card"]}
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={6}
+    >
       <label
-        cssClasses={["nc-slider-value"]}
-        label={vol((v: number) => `${Math.round(v * 100)}%`)}
+        cssClasses={["cc-slider-label"]}
+        label="Sound"
+        halign={Gtk.Align.START}
       />
-    </box>
-  )
-}
-
-function BrightnessSlider() {
-  const [brightness, setBrightness] = createState(getBrightness())
-  const [ico, setIco] = createState(brightnessIcon(getBrightness()))
-
-  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
-    const b = getBrightness()
-    setBrightness(b)
-    setIco(brightnessIcon(b))
-    return GLib.SOURCE_CONTINUE
-  })
-
-  return (
-    <box cssClasses={["nc-slider-row"]} spacing={12}>
-      <label cssClasses={["nc-slider-icon"]} label={ico} />
-      <slider
-        cssClasses={["nc-thick-slider"]}
-        hexpand
-        min={0}
-        max={1}
-        value={brightness}
-        valign={Gtk.Align.CENTER}
-        onChangeValue={(self: any) => {
-          const pct = Math.round(self.value * 100)
-          setBrightness(self.value)
-          setIco(brightnessIcon(self.value))
-          GLib.spawn_command_line_async(`brightnessctl set ${pct}%`)
-        }}
-      />
-      <label
-        cssClasses={["nc-slider-value"]}
-        label={brightness((b: number) => `${Math.round(b * 100)}%`)}
-      />
+      <box spacing={10}>
+        <label cssClasses={["cc-slider-icon"]} label={ico} />
+        <slider
+          cssClasses={["cc-slider"]}
+          hexpand
+          min={0}
+          max={1}
+          value={vol}
+          valign={Gtk.Align.CENTER}
+          onChangeValue={(self: any) => {
+            speaker.volume = self.value
+            setVol(self.value)
+            setIco(volumeIcon(self.value, speaker.mute))
+          }}
+        />
+        <label
+          cssClasses={["cc-slider-value"]}
+          label={vol((v: number) => `${Math.round(v * 100)}%`)}
+        />
+      </box>
     </box>
   )
 }
@@ -415,33 +443,29 @@ export default function Controls() {
       orientation={Gtk.Orientation.VERTICAL}
       spacing={8}
     >
-      {/* ── Row 1: left column (WiFi + BT/Night) │ right column (Media) ── */}
+      {/* ── Rows 1+2: left pills col + right media col ── */}
       <box spacing={8}>
+        {/* Left: WiFi (row1) stacked above Bluetooth (row2) */}
         <box orientation={Gtk.Orientation.VERTICAL} spacing={8} hexpand>
           <WifiCard />
-          <box spacing={8}>
-            <BtCard />
-            <NightModeCard />
-          </box>
+          <BtCard />
         </box>
+        {/* Right: Media spans both rows */}
         <MediaPlayerCard />
       </box>
 
-      {/* ── Row 2: Focus pill + Calculator ── */}
+      {/* ── Row 3: Focus (wide) + Night (small) + Calc (circle) ── */}
       <box spacing={8}>
         <FocusCard />
+        <NightModeCard />
         <CalcButton />
       </box>
 
-      {/* ── Row 3: Sliders ── */}
-      <box
-        cssClasses={["nc-sliders-card"]}
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={10}
-      >
-        <BrightnessSlider />
-        <VolumeSlider />
-      </box>
+      {/* ── Row 4: Brightness slider ── */}
+      <BrightnessSlider />
+
+      {/* ── Row 5: Volume slider ── */}
+      <VolumeSlider />
     </box>
   )
 }

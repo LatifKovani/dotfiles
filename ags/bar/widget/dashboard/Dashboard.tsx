@@ -45,7 +45,7 @@ export default function Dashboard() {
         cssClasses={["dashboard"]}
         orientation={Gtk.Orientation.VERTICAL}
         spacing={0}
-        widthRequest={660}
+        widthRequest={566}
       >
         <Calendar />
         <box cssClasses={["dash-divider"]} heightRequest={1} />
