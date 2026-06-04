@@ -92,7 +92,7 @@ export default function NotificationCenter() {
           halign={Gtk.Align.END}
           valign={Gtk.Align.START}
           marginTop={31}
-          marginEnd={677}
+          marginEnd={680}
           $={(self: Gtk.Box) => {
             // Prevent clicks on the panel from reaching the overlay
             const click = new Gtk.GestureClick()
@@ -108,7 +108,7 @@ export default function NotificationCenter() {
             )}
             orientation={Gtk.Orientation.VERTICAL}
             spacing={14}
-            widthRequest={566}
+            widthRequest={560}
           >
             <Header />
             <Divider />
