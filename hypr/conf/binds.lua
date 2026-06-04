@@ -7,13 +7,15 @@ local fileManager = "nautilus"
 local terminal = "kitty"
 local browser = "brave"
 local office = "onlyoffice-desktopeditors"
-local appLauncher = "rofi -show drun"
+local appLauncher = "qs ipc -p /usr/share/tide-island call tide toggleAppLauncher"
 local lockScreen = "hyprlock"
 local nightMode = "~/.local/bin/toggle-wlsunset.fish"
-local notifCentre = "echo -n 'toggleNc' > /tmp/ags-toggle"
-local dashboard = "echo -n 'toggleDashboard' > /tmp/ags-toggle"
-local logout = "echo -n 'togglePowerMenu' > /tmp/ags-toggle"
-local nmsurf = "nmsurf"
+local powerMenu = "qs ipc -p /usr/share/tide-island call tide togglePowerMenu"
+local controlCenter = "qs ipc -p /usr/share/tide-island call tide toggleControlCenter"
+local expandedPlayer = "qs ipc -p /usr/share/tide-island call tide togglePlayer"
+local lyrics = "qs ipc -p /usr/share/tide-island call tide showLyrics"
+local customSwipe = "qs ipc -p /usr/share/tide-island call tide showCustom"
+local clock = "qs ipc -p /usr/share/tide-island call tide showClock"
 local screenPrint =
 	'grim -g "$(slurp)" /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png'
 local windowShot =
@@ -31,17 +33,19 @@ hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appLauncher))
 -- ─── System ────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.kill())
 hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd(lockScreen))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(logout))
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(powerMenu))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(controlCenter))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(expandedPlayer))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lyrics))
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(customSwipe))
 
 -- ─── Tools ─────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenPrint))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(windowShot))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightMode))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(notifCentre))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(dashboard))
--- hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(nmsurf))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(clipHistory))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd(clearClipboard))
 
@@ -80,6 +84,12 @@ hl.bind(mainMod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
+bind = {
+	mods = { "SUPER" },
+	key = "P",
+	dispatcher = "exec",
+	params = "qs msg qml 'island.togglePowerMenu()'",
+}
 -- ─── Hardware Keys ─────────────────────────────────────────────────────────────
 
 -- ASUS keyboard backlight / ROG
