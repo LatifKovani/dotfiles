@@ -9,7 +9,11 @@ local browser = "brave"
 local office = "onlyoffice-desktopeditors"
 local appLauncher = "qs ipc -p /usr/share/tide-island call tide toggleAppLauncher"
 local lockScreen = "hyprlock"
-local nightMode = "~/.local/bin/toggle-wlsunset.fish"
+
+local nightModeEnable = "hyprctl hyprsunset temperature 4000"
+local nightModeDisable = "hyprctl hyprsunset identity"
+local nightModeWarmer = "hyprctl hyprsunset temperature -500"
+local nightModeCooler = "hyprctl hyprsunset temperature +500"
 local powerMenu = "qs ipc -p /usr/share/tide-island call tide togglePowerMenu"
 local controlCenter = "qs ipc -p /usr/share/tide-island call tide toggleControlCenter"
 local expandedPlayer = "qs ipc -p /usr/share/tide-island call tide togglePlayer"
@@ -22,30 +26,38 @@ local windowShot =
 	"sleep 0.3 && grim /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png"
 local clipHistory = "cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 local clearClipboard = "cliphist wipe"
+local reloadShell = "qs ipc -p /usr/share/tide-island call tide reload"
+local wallpaperPicker = "qs ipc -p /usr/share/tide-island call tide toggleWallpaperPicker"
 
 -- ─── Apps ──────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(office))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appLauncher))
 
 -- ─── System ────────────────────────────────────────────────────────────────────
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.kill())
 hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd(lockScreen))
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appLauncher))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(powerMenu))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(controlCenter))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(expandedPlayer))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lyrics))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd(lyrics))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(customSwipe))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(reloadShell))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperPicker))
 
 -- ─── Tools ─────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenPrint))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(windowShot))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightMode))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightModeEnable)) -- Enable night mode (3000K)
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(nightModeDisable)) -- Disable night mode
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(nightModeWarmer)) -- Make it warmer (lower temp)
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(nightModeCooler)) -- Make it cooler (higher temp)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(clipHistory))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd(clearClipboard))
 
