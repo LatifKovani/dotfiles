@@ -14,6 +14,7 @@ hl.on("hyprland.start", function()
 		"sleep 0.5 && awww img ~/Pictures/Wallpapers/5826807.jpg --transition-type center --transition-step 5 --transition-fps 60"
 	)
 	hl.exec_cmd("hyprsunset")
+hl.workspace("^\\d+$", "exec, fish ~/.config/hypr/scripts/ws-anim-switch.fish")
 	-- hl.exec_cmd("ags run ~/.config/ags/bar/app.ts")
 	-- hl.exec_cmd("swaybg -m fill -i ~/Pictures/5826802.jpg")
 end)

@@ -16,5 +16,4 @@ hl.monitor({
 	scale = 1,
 })
 
--- Mirror variant — swap the above with this if you want to mirror:
 -- hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = 1, mirror = "eDP-1" })

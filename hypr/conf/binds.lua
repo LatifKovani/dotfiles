@@ -8,7 +8,7 @@ local terminal = "kitty"
 local browser = "brave"
 local office = "onlyoffice-desktopeditors"
 local appLauncher = "qs ipc -p /usr/share/tide-island call tide toggleAppLauncher"
-local lockScreen = "hyprlock"
+local lockNotify = "fish ~/.config/hypr/scripts/lock-notify.fish"
 
 local nightModeEnable = "hyprctl hyprsunset temperature 4000"
 local nightModeDisable = "hyprctl hyprsunset identity"
@@ -24,10 +24,12 @@ local screenPrint =
 	'grim -g "$(slurp)" /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png'
 local windowShot =
 	"sleep 0.3 && grim /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png"
-local clipHistory = "cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
+local clipHistory = "qs -c /usr/share/tide-island ipc call tide toggleClipboardHistory"
 local clearClipboard = "cliphist wipe"
-local reloadShell = "qs ipc -p /usr/share/tide-island call tide reload"
 local wallpaperPicker = "qs ipc -p /usr/share/tide-island call tide toggleWallpaperPicker"
+local AlbumCava = "qs ipc -p /usr/share/tide-island call tide toggleAlcoveMusicCapsule"
+local AItranslate = "qs ipc -p /usr/share/tide-island/ call tide toggleAiTranslate"
+local WorkspaceOverview = "qs ipc -p /usr/share/tide-island call overview toggle"
 
 -- ─── Apps ──────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
@@ -38,7 +40,7 @@ hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(office))
 -- ─── System ────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + X", hl.dsp.window.kill())
-hl.bind(mainMod .. " + SHIFT + U", hl.dsp.exec_cmd(lockScreen))
+hl.bind(mainMod .. " + U", hl.dsp.exec_cmd(lockNotify))
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(appLauncher))
@@ -48,21 +50,26 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(expandedPlayer))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd(lyrics))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(customSwipe))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(reloadShell))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperPicker))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(AlbumCava))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(AItranslate))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(WorkspaceOverview))
 
 -- ─── Tools ─────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenPrint))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(windowShot))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightModeEnable)) -- Enable night mode (3000K)
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(nightModeDisable)) -- Disable night mode
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(nightModeWarmer)) -- Make it warmer (lower temp)
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(nightModeCooler)) -- Make it cooler (higher temp)
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightModeEnable))
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(nightModeDisable))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(nightModeWarmer))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(nightModeCooler))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(clipHistory))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd(clearClipboard))
 
 -- ─── Layout ────────────────────────────────────────────────────────────────────
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + P", function()
+	hl.dispatch(hl.dsp.window.pseudo())
+	hl.dispatch(hl.dsp.window.resize({ x = 1280, y = 720, relative = false }))
+end)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("hyprctl eval 'hl.config({ general = { layout = \"scrolling\" } })'"))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("hyprctl eval 'hl.config({ general = { layout = \"dwindle\" } })'"))
@@ -75,13 +82,9 @@ hl.bind(mainMod .. " + minus", hl.dsp.layout("colresize -0.1"))
 hl.bind(mainMod .. " + SHIFT + period", hl.dsp.layout("swapcol r"))
 hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.layout("swapcol l"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("fit active"))
-hl.bind("CTRL + 1", hl.dsp.layout("movecoltoworkspace 1"))
-hl.bind("CTRL + 2", hl.dsp.layout("movecoltoworkspace 2"))
 
 -- ─── Focus (vim-style) ─────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + h", hl.dsp.layout("focus l"))
-hl.bind(mainMod .. " + j", hl.dsp.layout("focus d"))
-hl.bind(mainMod .. " + k", hl.dsp.layout("focus u"))
 hl.bind(mainMod .. " + l", hl.dsp.layout("focus r"))
 
 -- ─── Workspaces ────────────────────────────────────────────────────────────────
@@ -103,8 +106,6 @@ bind = {
 	params = "qs msg qml 'island.togglePowerMenu()'",
 }
 -- ─── Hardware Keys ─────────────────────────────────────────────────────────────
-
--- ASUS keyboard backlight / ROG
 hl.bind(
 	"code:237",
 	hl.dsp.exec_cmd("brightnessctl -d asus::kbd_backlight set 20%-"),
