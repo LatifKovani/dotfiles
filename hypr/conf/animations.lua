@@ -11,7 +11,7 @@ hl.curve("myDown", { type = "bezier", points = { { 0.5, 1.1 }, { 0.5, 0.9 } } })
 
 -- Animations
 hl.animation({ leaf = "windows", enabled = true, speed = 7, bezier = "myBezier" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 5, bezier = "myUp", style = "slide" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, bezier = "myUp", style = "slide" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 5, bezier = "easeInOutQuart", style = "slide" })
 hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "borderangle", enabled = true, speed = 8, bezier = "default" })

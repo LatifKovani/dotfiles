@@ -18,18 +18,19 @@ local powerMenu = "qs ipc -p /usr/share/tide-island call tide togglePowerMenu"
 local controlCenter = "qs ipc -p /usr/share/tide-island call tide toggleControlCenter"
 local expandedPlayer = "qs ipc -p /usr/share/tide-island call tide togglePlayer"
 local lyrics = "qs ipc -p /usr/share/tide-island call tide showLyrics"
-local customSwipe = "qs ipc -p /usr/share/tide-island call tide showCustom"
 local clock = "qs ipc -p /usr/share/tide-island call tide showClock"
-local screenPrint =
-	'grim -g "$(slurp)" /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png'
-local windowShot =
-	"sleep 0.3 && grim /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png"
 local clipHistory = "qs -c /usr/share/tide-island ipc call tide toggleClipboardHistory"
 local clearClipboard = "cliphist wipe"
 local wallpaperPicker = "qs ipc -p /usr/share/tide-island call tide toggleWallpaperPicker"
-local AlbumCava = "qs ipc -p /usr/share/tide-island call tide toggleAlcoveMusicCapsule"
-local AItranslate = "qs ipc -p /usr/share/tide-island/ call tide toggleAiTranslate"
+local FileShelf = "qs ipc -p /usr/share/tide-island call tide toggleFileShelf"
+local toggleSettings = "qs ipc -p /usr/share/tide-island call tide toggleSettings"
 local WorkspaceOverview = "qs ipc -p /usr/share/tide-island call overview toggle"
+local screenPrint =
+	'grim -g "$(slurp)" /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png'
+local screenshot =
+	"sleep 0.3 && grim /tmp/screenshot.png && wl-copy --type image/png < /tmp/screenshot.png && satty --filename /tmp/screenshot.png"
+local windowShot =
+	"sleep 0.3 && hyprctl clients -j | jq -r '.[] | select(.focusHistoryID == 0) | \"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1])\"' | xargs -I {} grim -g {} /tmp/screenshot-window.png && satty --filename /tmp/screenshot-window.png && wl-copy --type image/png < /tmp/screenshot-window.png"
 
 -- ─── Apps ──────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
@@ -49,15 +50,15 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(controlCenter))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(expandedPlayer))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd(lyrics))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
-hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(customSwipe))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperPicker))
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(AlbumCava))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(AItranslate))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(FileShelf))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(toggleSettings))
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(WorkspaceOverview))
 
 -- ─── Tools ─────────────────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenPrint))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(windowShot))
+hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd(screenshot))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(nightModeEnable))
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(nightModeDisable))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(nightModeWarmer))
