@@ -29,6 +29,7 @@ hl.config({
 			vibrancy = 0.2,
 			new_optimizations = true,
 			brightness = 0.8,
+			special = false,
 		},
 		shadow = {
 			enabled = true,

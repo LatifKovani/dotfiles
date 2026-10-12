@@ -22,6 +22,9 @@ local clock = "qs ipc -p /usr/share/tide-island call tide showClock"
 local clipHistory = "qs -c /usr/share/tide-island ipc call tide toggleClipboardHistory"
 local clearClipboard = "cliphist wipe"
 local wallpaperPicker = "qs ipc -p /usr/share/tide-island call tide toggleWallpaperPicker"
+local themePicker = "qs ipc -p /usr/share/tide-island call tide toggleThemePicker"
+local themeNext = "qs ipc -p /usr/share/tide-island call tide nextTheme"
+local themePrev = "qs ipc -p /usr/share/tide-island call tide prevTheme"
 local FileShelf = "qs ipc -p /usr/share/tide-island call tide toggleFileShelf"
 local toggleSettings = "qs ipc -p /usr/share/tide-island call tide toggleSettings"
 local WorkspaceOverview = "qs ipc -p /usr/share/tide-island call overview toggle"
@@ -51,6 +54,9 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(expandedPlayer))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd(lyrics))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperPicker))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(themePicker))
+hl.bind(mainMod .. " + CTRL + period", hl.dsp.exec_cmd(themeNext))
+hl.bind(mainMod .. " + CTRL + comma", hl.dsp.exec_cmd(themePrev))
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(FileShelf))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(toggleSettings))
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(WorkspaceOverview))
@@ -73,7 +79,7 @@ hl.bind(mainMod .. " + SHIFT + P", function()
 end)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("hyprctl eval 'hl.config({ general = { layout = \"scrolling\" } })'"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("hyprctl eval 'hl.config({ general = { layout = \"dwindle\" } })'"))
+hl.bind(mainMod .. " + CTRL + T", hl.dsp.exec_cmd("hyprctl eval 'hl.config({ general = { layout = \"dwindle\" } })'"))
 
 -- ─── Scrolling Layout ──────────────────────────────────────────────────────────
 hl.bind(mainMod .. " + period", hl.dsp.layout("move +col"))
