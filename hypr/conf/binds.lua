@@ -9,7 +9,6 @@ local browser = "brave"
 local office = "onlyoffice-desktopeditors"
 local appLauncher = "qs ipc -p /usr/share/tide-island call tide toggleAppLauncher"
 local lockNotify = "fish ~/.config/hypr/scripts/lock-notify.fish"
-
 local nightModeEnable = "hyprctl hyprsunset temperature 4000"
 local nightModeDisable = "hyprctl hyprsunset identity"
 local nightModeWarmer = "hyprctl hyprsunset temperature -500"
@@ -55,8 +54,8 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd(lyrics))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(clock))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperPicker))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(themePicker))
-hl.bind(mainMod .. " + CTRL + period", hl.dsp.exec_cmd(themeNext))
-hl.bind(mainMod .. " + CTRL + comma", hl.dsp.exec_cmd(themePrev))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(themeNext))
+hl.bind(mainMod .. " + SHIFT + TAB", hl.dsp.exec_cmd(themePrev))
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(FileShelf))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(toggleSettings))
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(WorkspaceOverview))

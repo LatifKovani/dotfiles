@@ -14,6 +14,9 @@ hl.config({
 		resize_on_border = false,
 		allow_tearing = false,
 	},
+	misc = {
+		allow_session_lock_restore = true,
+	},
 
 	decoration = {
 		rounding = 25,

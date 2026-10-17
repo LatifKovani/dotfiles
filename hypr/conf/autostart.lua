@@ -8,12 +8,10 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("elephant")
 	hl.exec_cmd("hyprctl setcursor macOS 24")
-	hl.exec_cmd("quickshell -c /usr/share/tide-island")
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd(
-		"sleep 0.5 && awww img ~/Pictures/Wallpapers/DuoDAy+2.jpg --transition-type center --transition-step 5 --transition-fps 60"
+		"sleep 0.5 && /usr/share/tide-island/scripts/apply-wallpaper"
 	)
-	hl.exec_cmd("hyprsunset")
 	-- hl.exec_cmd("ags run ~/.config/ags/bar/app.ts")
 	-- hl.exec_cmd("swaybg -m fill -i ~/Pictures/5826802.jpg")
 end)
